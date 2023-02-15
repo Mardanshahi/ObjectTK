@@ -21,6 +21,6 @@
     <PackageReference Include="OpenTK" Version="4.7.5" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ObjectTK\ObjectTK.csproj" />
+    <ProjectReference Include="..\ObjectTK\ObjectTK.Core.csproj" />
   </ItemGroup>
 </Project>
