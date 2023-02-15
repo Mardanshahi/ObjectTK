@@ -7,8 +7,11 @@ using ObjectTK.Shaders;
 using ObjectTK.Textures;
 using ObjectTK.Tools.Shapes;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Examples.BasicExamples
 {
@@ -34,40 +37,37 @@ namespace Examples.BasicExamples
 
         public RotatingTexturedCubeExample()
         {
-            Load += OnLoad;
-            RenderFrame += OnRenderFrame;
-            KeyDown += OnKeyDown;
         }
 
-        private void OnKeyDown(object sender, KeyboardKeyEventArgs e)
+        protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
             switch (e.Key)
             {
-                case Key.R:
+                case Keys.R:
                     _objectView = _baseView = Matrix4.Identity;
                     _rotateIndex = _defaultRotateIndex;
                     _stopwatch.Restart();
                     break;
 
-                case Key.Space:
+                case Keys.Space:
                     _baseView = _objectView;
                     _rotateIndex = (_rotateIndex + 1) % _rotateVectors.Length;
                     _stopwatch.Restart();
                     break;
 
-                case Key.Number0:
-                case Key.Number1:
-                case Key.Number2:
-                case Key.Number3:
-                case Key.Number4:
+                case Keys.D0:
+                case Keys.D1:
+                case Keys.D2:
+                case Keys.D3:
+                case Keys.D4:
                     _baseView = _objectView;
-                    _rotateIndex = (e.Key - Key.Number0) % _rotateVectors.Length;
+                    _rotateIndex = (e.Key - Keys.D0) % _rotateVectors.Length;
                     _stopwatch.Restart();
                     break;
             }
         }
 
-        private void OnLoad(object sender, EventArgs e)
+        protected override void OnLoad()
         {
             // load texture from file
             using (var bitmap = new Bitmap("Data/Textures/crate.png"))
@@ -106,10 +106,10 @@ namespace Examples.BasicExamples
             _stopwatch.Restart();
         }
 
-        private void OnRenderFrame(object sender, OpenTK.FrameEventArgs e)
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
             // set up viewport
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, Size.X, Size.Y);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             SetupPerspective();
 

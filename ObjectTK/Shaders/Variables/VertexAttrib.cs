@@ -9,7 +9,7 @@
 
 using System.Linq;
 using System.Reflection;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace ObjectTK.Shaders.Variables
 {
@@ -48,7 +48,7 @@ namespace ObjectTK.Shaders.Variables
         internal override void Initialize(Program program, PropertyInfo property)
         {
             base.Initialize(program, property);
-            var attribute = property.GetCustomAttributes<VertexAttribAttribute>(false).FirstOrDefault() ?? new VertexAttribAttribute();
+            VertexAttribAttribute attribute = property.GetCustomAttributes<VertexAttribAttribute>(false).FirstOrDefault() ?? new VertexAttribAttribute();
             Components = attribute.Components;
             Type = attribute.Type;
             Normalized = attribute.Normalized;

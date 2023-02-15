@@ -14,7 +14,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Examples.AdvancedExamples
 {
@@ -429,7 +429,7 @@ namespace Examples.AdvancedExamples
                             case TextureTarget.Texture2D:
                                 GL.CompressedTexImage2D( TextureTarget.Texture2D,
                                                          Level,
-                                                         _PixelInternalFormat,
+                                                         (InternalFormat)_PixelInternalFormat,
                                                          Width,
                                                          Height,
                                                         TextureLoaderParameters.Border,
@@ -439,7 +439,7 @@ namespace Examples.AdvancedExamples
                             case TextureTarget.TextureCubeMap:
                                 GL.CompressedTexImage2D( TextureTarget.TextureCubeMapPositiveX + Slices,
                                                          Level,
-                                                         _PixelInternalFormat,
+                                                         (InternalFormat)_PixelInternalFormat,
                                                          Width,
                                                          Height,
                                                          TextureLoaderParameters.Border,
@@ -520,7 +520,8 @@ namespace Examples.AdvancedExamples
                 GL.TexParameter( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
                 GL.TexParameter( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
 
-                GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
+                //todo: what should this be?
+                //GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
 
                 GLError = GL.GetError( );
                 if ( GLError != ErrorCode.NoError )

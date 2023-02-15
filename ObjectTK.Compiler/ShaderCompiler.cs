@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using ObjectTK.Exceptions;
 using ObjectTK.Shaders;
 using ObjectTK.Shaders.Sources;
-using OpenTK;
+using OpenTK.Windowing.Desktop;
 
 namespace ObjectTK.Compiler
 {
@@ -56,7 +56,7 @@ namespace ObjectTK.Compiler
         public static void Main(string[] args)
         {
             // create a hidden GameWindow to initialize an OpenGL context
-            using (new GameWindow())
+            using (new GameWindow(GameWindowSettings.Default, NativeWindowSettings.Default))
             {
                 // iterate over given arguments
                 foreach (var path in args)

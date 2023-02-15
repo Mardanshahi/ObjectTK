@@ -13,7 +13,8 @@ using System.Drawing;
 using System.Linq;
 using ObjectTK.Exceptions;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 namespace ObjectTK.Shaders.Variables
 {
@@ -47,7 +48,7 @@ namespace ObjectTK.Shaders.Variables
                 new Map<uint>(GL.Uniform1),
                 new Map<float>(GL.Uniform1),
                 new Map<double>(GL.Uniform1),
-                new Map<Half>((_, half) => GL.Uniform1(_, half)),
+                new Map<OpenTK.Mathematics.Half>((_, half) => GL.Uniform1(_, half)),
                 new Map<Color>((_, color) => GL.Uniform4(_, color)),
                 new Map<Vector2>(GL.Uniform2),
                 new Map<Vector3>(GL.Uniform3),
@@ -61,12 +62,12 @@ namespace ObjectTK.Shaders.Variables
                 new Map<Matrix2>((_, matrix) => GL.UniformMatrix2(_, false, ref matrix)),
                 new Map<Matrix3>((_, matrix) => GL.UniformMatrix3(_, false, ref matrix)),
                 new Map<Matrix4>((_, matrix) => GL.UniformMatrix4(_, false, ref matrix)),
-                new Map<Matrix2x3>((_, matrix) => GL.UniformMatrix2x3(_, false, ref matrix)),
-                new Map<Matrix2x4>((_, matrix) => GL.UniformMatrix2x4(_, false, ref matrix)),
-                new Map<Matrix3x2>((_, matrix) => GL.UniformMatrix3x2(_, false, ref matrix)),
-                new Map<Matrix3x4>((_, matrix) => GL.UniformMatrix3x4(_, false, ref matrix)),
-                new Map<Matrix4x2>((_, matrix) => GL.UniformMatrix4x2(_, false, ref matrix)),
-                new Map<Matrix4x3>((_, matrix) => GL.UniformMatrix4x3(_, false, ref matrix))
+                new Map<Matrix2x3>((_, matrix) => GL.UniformMatrix2x3(_, 6, false, new float[] { matrix.M11, matrix.M12, matrix.M13, matrix.M21, matrix.M22, matrix.M23 } )),
+                new Map<Matrix2x4>((_, matrix) => GL.UniformMatrix2x4(_, 1, false, new float[] { matrix.M11, matrix.M12, matrix.M13, matrix.M14, matrix.M21, matrix.M22, matrix.M23, matrix.M24 })),
+                new Map<Matrix3x2>((_, matrix) => GL.UniformMatrix3x2(_, 1, false, new float[] { matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.M31, matrix.M32 })),
+                new Map<Matrix3x4>((_, matrix) => GL.UniformMatrix3x4(_, 1, false, new float[] { matrix.M11, matrix.M12, matrix.M13, matrix.M14, matrix.M21, matrix.M22, matrix.M23, matrix.M24, matrix.M31, matrix.M32, matrix.M33, matrix.M34 })),
+                new Map<Matrix4x2>((_, matrix) => GL.UniformMatrix4x2(_, 1, false, new float[] { matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.M31, matrix.M32, matrix.M41, matrix.M42 })),
+                new Map<Matrix4x3>((_, matrix) => GL.UniformMatrix4x3(_, 1, false, new float[] { matrix.M11, matrix.M12, matrix.M13, matrix.M21, matrix.M22, matrix.M23, matrix.M31, matrix.M32, matrix.M33, matrix.M41, matrix.M42, matrix.M43 }))
             };
         }
 

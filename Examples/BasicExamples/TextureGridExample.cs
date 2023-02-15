@@ -2,12 +2,16 @@
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+
 using Examples.Shaders;
+
 using ObjectTK.Buffers;
 using ObjectTK.Shaders;
 using ObjectTK.Textures;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 
 namespace Examples.BasicExamples
 {
@@ -40,11 +44,9 @@ namespace Examples.BasicExamples
 
         public TextureGridExample()
         {
-            Load += OnLoad;
-            RenderFrame += OnRenderFrame;
         }
 
-        protected void OnLoad(object sender, EventArgs e)
+        protected override void OnLoad()
         {
             // load textures into array
             for (var i = 0; i < _stateTextures.Length; i++)
@@ -81,10 +83,10 @@ namespace Examples.BasicExamples
             Camera.ResetToDefault();
         }
 
-        protected void OnRenderFrame(object sender, FrameEventArgs frameEventArgs)
+        protected override void OnRenderFrame(FrameEventArgs frameEventArgs)
         {
             // setup stuff
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, Size.X, Size.Y);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             SetupPerspective();
 

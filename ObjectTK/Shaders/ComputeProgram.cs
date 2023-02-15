@@ -10,7 +10,7 @@
 using System;
 using System.Linq;
 using ObjectTK.Shaders.Sources;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace ObjectTK.Shaders
 {

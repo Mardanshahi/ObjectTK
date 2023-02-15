@@ -8,15 +8,24 @@
 //
 
 using OpenTK;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Desktop;
 
 namespace ObjectTK.Tools.Cameras
 {
     public abstract class CameraBehavior
     {
+        public GameWindow Window;
+
         public virtual void Initialize(CameraState state) { }
         public virtual void UpdateFrame(CameraState state, float step) { }
         public virtual void MouseMove(CameraState state, Vector2 delta) { }
         public virtual void MouseWheelChanged(CameraState state, float delta) { }
+
+        public CameraBehavior(GameWindow gw)
+        {
+            Window = gw;
+        }
 
         /// <summary>
         /// TODO: add possibility to limit the pitch and prevent "flipping over"
@@ -27,7 +36,7 @@ namespace ObjectTK.Tools.Cameras
             var forward = Vector3.Cross(leftRight, state.Up);
             // rotate look at direction
             var rot = Matrix4.CreateFromAxisAngle(state.Up, -delta.X) * Matrix4.CreateFromAxisAngle(leftRight, delta.Y);
-            Vector3.Transform(ref state.LookAt, ref rot, out state.LookAt);
+            state.LookAt = (rot * new Vector4(state.LookAt, 1)).Xyz;
             // renormalize to prevent summing up of floating point errors
             state.LookAt.Normalize();
             // flip up vector when pitched more than +/-90� from the forward direction

@@ -4,7 +4,9 @@ using Examples.Shaders;
 using ObjectTK.Buffers;
 using ObjectTK.Shaders;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 
 namespace Examples.BasicExamples
 {
@@ -18,12 +20,9 @@ namespace Examples.BasicExamples
 
         public MinimalExample()
         {
-            Load += OnLoad;
-            Unload += OnUnload;
-            RenderFrame += OnRenderFrame;
         }
 
-        private void OnLoad(object sender, EventArgs e)
+        protected override void OnLoad()
         {
             // initialize shader (load sources, create/compile/link shader program, error checking)
             // when using the factory method the shader sources are retrieved from the ShaderSourceAttributes
@@ -52,7 +51,7 @@ namespace Examples.BasicExamples
             GL.ClearColor(Color.MidnightBlue);
         }
 
-        private void OnUnload(object sender, EventArgs e)
+        protected override void OnUnload()
         {
             // Always make sure to properly dispose gl resources to prevent memory leaks.
             // Most of the examples do not explicitly dispose resources, because
@@ -64,10 +63,10 @@ namespace Examples.BasicExamples
             _vbo.Dispose();
         }
 
-        private void OnRenderFrame(object sender, FrameEventArgs e)
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
             // set up viewport
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, Size.X, Size.Y);
             // clear the back buffer
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             // set up modelview and perspective matrix

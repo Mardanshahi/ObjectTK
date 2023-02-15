@@ -8,7 +8,8 @@
 //
 
 using System;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 namespace ObjectTK.Shaders.Variables
 {

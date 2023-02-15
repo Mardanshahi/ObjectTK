@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace ObjectTK.Buffers
 {

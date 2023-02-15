@@ -9,7 +9,7 @@
 
 using System;
 using ObjectTK.Buffers;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace ObjectTK.Textures
 {

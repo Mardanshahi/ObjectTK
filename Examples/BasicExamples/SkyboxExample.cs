@@ -6,7 +6,9 @@ using ObjectTK.Shaders;
 using ObjectTK.Textures;
 using ObjectTK.Tools.Shapes;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Windowing.Common;
+using OpenTK.Mathematics;
 
 namespace Examples.BasicExamples
 {
@@ -21,12 +23,9 @@ namespace Examples.BasicExamples
 
         public SkyboxExample()
         {
-            Load += OnLoad;
-            Unload += OnUnload;
-            RenderFrame += OnRender;
         }
 
-        private void OnLoad(object sender, EventArgs e)
+        protected override void OnLoad()
         {
             // initialize shader
             _program = ProgramFactory.Create<SkyboxProgram>();
@@ -62,16 +61,17 @@ namespace Examples.BasicExamples
             GL.ClearColor(Color.MidnightBlue);
         }
 
-        private void OnUnload(object sender, EventArgs e)
+        protected override void OnUnload()
         {
             _cube.VertexBuffer.Dispose();
             _cube.IndexBuffer.Dispose();
         }
 
-        private void OnRender(object sender, FrameEventArgs e)
+
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
             // set up viewport
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, Size.X, Size.Y);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             SetupPerspective();
 

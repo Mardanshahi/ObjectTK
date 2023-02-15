@@ -6,8 +6,11 @@ using ObjectTK.Buffers;
 using ObjectTK.Shaders;
 using ObjectTK.Textures;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Examples.BasicExamples
 {
@@ -42,21 +45,18 @@ namespace Examples.BasicExamples
 
         public BufferLayoutTexturingExample()
         {
-            Load += OnLoad;
-            RenderFrame += OnRenderFrame;
-            KeyDown += OnKeyDown;
             _enableMipmapping = true;
         }
 
-        private void OnKeyDown(object sender, KeyboardKeyEventArgs e)
+        protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
             switch (e.Key)
             {
-                case Key.Space: _enableMipmapping = !_enableMipmapping; break;
+                case Keys.Space: _enableMipmapping = !_enableMipmapping; break;
             }
         }
 
-        private void OnLoad(object sender, EventArgs e)
+        protected override void OnLoad()
         {
             // load texture from file
             using (var bitmap = new Bitmap("Data/Textures/checker.jpg"))
@@ -119,10 +119,10 @@ namespace Examples.BasicExamples
             GL.ClearColor(Color.MidnightBlue);
         }
 
-        private void OnRenderFrame(object sender, FrameEventArgs e)
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
             // set up viewport
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, Size.X, Size.Y);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             SetupPerspective();
 

@@ -47,7 +47,7 @@ namespace ObjectTK.Shaders
         /// </summary>
         /// <typeparam name="T">Specifies the program type to create.</typeparam>
         /// <returns>A compiled and linked program.</returns>
-        public static T Create<T>()
+        public static T Create<T>(Func<string, object[], string> preprocessSource = null, params object[] preprocessorArgs )
             where T : Program
         {
             // retrieve shader types and filenames from attributes
@@ -67,6 +67,8 @@ namespace ObjectTK.Shaders
                         // load the source from effect(s)
                         var included = new List<Effect.Section>();
                         var source = GetShaderSource(attribute.EffectKey, included);
+                        if (preprocessSource != null)
+                            source = preprocessSource(source, preprocessorArgs);
                         // assign source filenames for proper information log output
                         shader.SourceFiles = included.Select(_ => _.Effect.Path).ToList();
                         // compile shader source

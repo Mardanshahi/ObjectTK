@@ -5,8 +5,11 @@ using Examples.Shaders;
 using ObjectTK.Buffers;
 using ObjectTK.Shaders;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Examples.AdvancedExamples
 {
@@ -36,9 +39,6 @@ namespace Examples.AdvancedExamples
         public FeedbackGravityExample()
         {
             _random = new Random();
-            Load += OnLoad;
-            RenderFrame += OnRenderFrame;
-            Keyboard.KeyDown += OnKeyDown;
         }
 
         private float Rand(float range)
@@ -46,7 +46,7 @@ namespace Examples.AdvancedExamples
             return (float)(_random.NextDouble() * 2 * range - range);
         }
 
-        private void OnLoad(object sender, EventArgs e)
+        protected override void OnLoad()
         {
             // initialize shader (load sources, create/compile/link shader program, error checking)
             // when using the factory method the shader sources are retrieved from the ShaderSourceAttributes
@@ -100,10 +100,10 @@ namespace Examples.AdvancedExamples
             _buffers.Init(BufferTarget.ArrayBuffer, particles);
         }
 
-        private void OnRenderFrame(object sender, FrameEventArgs e)
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
             // set up viewport
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, Size.X, Size.Y);
             // clear the back buffer
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             // set up modelview and perspective matrix
@@ -135,20 +135,20 @@ namespace Examples.AdvancedExamples
             SwapBuffers();
         }
 
-        private void OnKeyDown(object sender, KeyboardKeyEventArgs e)
+        protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
             const float up = 1.1f;
             const float down = 0.9f;
             var reinitialize = false;
             switch (e.Key)
             {
-                case Key.Up: _centerMass *= up; break;
-                case Key.Down: _centerMass *= down; break;
-                case Key.Space:
-                case Key.Right:
-                case Key.Left:
-                    if (e.Key == Key.Right) _particleCount = (int)(_particleCount * up);
-                    if (e.Key == Key.Left) _particleCount = (int)(_particleCount * down);
+                case Keys.Up: _centerMass *= up; break;
+                case Keys.Down: _centerMass *= down; break;
+                case Keys.Space:
+                case Keys.Right:
+                case Keys.Left:
+                    if (e.Key == Keys.Right) _particleCount = (int)(_particleCount * up);
+                    if (e.Key == Keys.Left) _particleCount = (int)(_particleCount * down);
                     reinitialize = true;
                     break;
             }

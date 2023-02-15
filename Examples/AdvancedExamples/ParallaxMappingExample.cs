@@ -6,12 +6,15 @@ using ObjectTK.Buffers;
 using ObjectTK.Shaders;
 using ObjectTK.Textures;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Examples.AdvancedExamples
 {
-    [ExampleProject("Swizzled Parallax Mapping (ported from OpenTK examples)")]
+    [ExampleProject("Swizzled Parallax Mapping (ported from OpenTK examples (requires 2.0))")]
     public class ParallaxMappingExample
         : ExampleWindow
     {
@@ -43,13 +46,9 @@ namespace Examples.AdvancedExamples
 
         public ParallaxMappingExample()
         {
-            Load += OnLoad;
-            Resize += OnResize;
-            UpdateFrame += OnUpdateFrame;
-            RenderFrame += OnRenderFrame;
         }
 
-        protected void OnLoad(object sender, EventArgs eventArgs)
+        protected override void OnLoad()
         {
             VSync = VSyncMode.Off;
 
@@ -172,51 +171,51 @@ namespace Examples.AdvancedExamples
             GL.PolygonMode(MaterialFace.Back, PolygonMode.Line);
         }
 
-        protected void OnResize(object sender, EventArgs e)
+        protected override void OnResize(ResizeEventArgs e)
         {
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, Size.X, Size.Y);
         }
 
-        protected void OnUpdateFrame(object sender, FrameEventArgs e)
+        protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            if (Keyboard[Key.Space]) Trace.WriteLine("GL: " + GL.GetError());
+            if (KeyboardState[Keys.Space]) Trace.WriteLine("GL: " + GL.GetError());
             var factor = (float)e.Time;
-            if (Keyboard[Key.Q])
+            if (KeyboardState[Keys.Q])
             {
                 _materialScaleAndBiasAndShininess.X += factor;
                 Trace.WriteLine("Scale: " + _materialScaleAndBiasAndShininess.X + " Bias: " + _materialScaleAndBiasAndShininess.Y);
             }
-            if (Keyboard[Key.A])
+            if (KeyboardState[Keys.A])
             {
                 _materialScaleAndBiasAndShininess.X -= factor;
                 Trace.WriteLine("Scale: " + _materialScaleAndBiasAndShininess.X + " Bias: " + _materialScaleAndBiasAndShininess.Y);
             }
-            if (Keyboard[Key.W])
+            if (KeyboardState[Keys.W])
             {
                 _materialScaleAndBiasAndShininess.Y += factor;
                 Trace.WriteLine("Scale: " + _materialScaleAndBiasAndShininess.X + " Bias: " + _materialScaleAndBiasAndShininess.Y);
             }
-            if (Keyboard[Key.S])
+            if (KeyboardState[Keys.S])
             {
                 _materialScaleAndBiasAndShininess.Y -= factor;
                 Trace.WriteLine("Scale: " + _materialScaleAndBiasAndShininess.X + " Bias: " + _materialScaleAndBiasAndShininess.Y);
             }
-            if (Keyboard[Key.E])
+            if (KeyboardState[Keys.E])
             {
                 _materialScaleAndBiasAndShininess.Z += factor*100;
                 Trace.WriteLine("Shininess: " + _materialScaleAndBiasAndShininess.Z);
             }
-            if (Keyboard[Key.D])
+            if (KeyboardState[Keys.D])
             {
                 _materialScaleAndBiasAndShininess.Z -= factor*100;
                 Trace.WriteLine("Shininess: " + _materialScaleAndBiasAndShininess.Z);
             }
 
-            _lightPosition.X = (-(Width / 2) + Mouse.X) / 100f;
-            _lightPosition.Y = ((Height / 2) - Mouse.Y) / 100f;
+            _lightPosition.X = (-(Size.X / 2) + MouseState.X) / 100f;
+            _lightPosition.Y = ((Size.Y / 2) - MouseState.Y) / 100f;
         }
 
-        protected void OnRenderFrame(object sender, FrameEventArgs e)
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             

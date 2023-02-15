@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 using ObjectTK;
 using OpenTK;
+using OpenTK.Windowing.Desktop;
 
 namespace Examples
 {
@@ -22,7 +22,7 @@ namespace Examples
         {
             // find example projects
             var baseType = typeof (ExampleWindow);
-            var types = Assembly.GetExecutingAssembly().GetTypes().Where(_ => _ != baseType && baseType.IsAssignableFrom(_));
+            var types = System.Reflection.Assembly.GetExecutingAssembly().GetTypes().Where(_ => _ != baseType && baseType.IsAssignableFrom(_));
             // add tree nodes for example projects
             _examples = new Dictionary<string, Type>();
             foreach (var type in types)

@@ -10,6 +10,9 @@
 using System;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
 
 namespace ObjectTK.Tools.Cameras
 {
@@ -22,6 +25,8 @@ namespace ObjectTK.Tools.Cameras
         public float MouseMoveSpeed = 0.005f;
         public float MouseWheelSpeed = 0.1f;
         public float MoveSpeed = 60;
+
+        private float oldMouseWheelOffset = 0;
 
         public Camera()
         {
@@ -47,15 +52,15 @@ namespace ObjectTK.Tools.Cameras
         {
             if (Behavior == null) throw new InvalidOperationException("Can not enable Camera while the Behavior is not set.");
             window.UpdateFrame += UpdateFrame;
-            window.Mouse.Move += MouseMove;
-            window.Mouse.WheelChanged += MouseWheelChanged;
+            window.MouseMove += MouseMove;
+            window.MouseWheel += MouseWheelChanged;
         }
 
         public void Disable(GameWindow window)
         {
             window.UpdateFrame -= UpdateFrame;
-            window.Mouse.Move -= MouseMove;
-            window.Mouse.WheelChanged -= MouseWheelChanged;
+            window.MouseMove -= MouseMove;
+            window.MouseWheel -= MouseWheelChanged;
         }
 
         public void Update()
@@ -63,19 +68,21 @@ namespace ObjectTK.Tools.Cameras
             if (Behavior != null) Behavior.Initialize(State);
         }
 
-        private void UpdateFrame(object sender, FrameEventArgs e)
+        private void UpdateFrame(FrameEventArgs e)
         {
             Behavior.UpdateFrame(State, (float) e.Time * MoveSpeed);
         }
 
-        private void MouseMove(object sender, MouseMoveEventArgs e)
+        private void MouseMove(MouseMoveEventArgs e)
         {
-            Behavior.MouseMove(State, MouseMoveSpeed * new Vector2(e.XDelta, e.YDelta));
+            Behavior.MouseMove(State, MouseMoveSpeed * new Vector2(-e.DeltaX, -e.DeltaY));
         }
         
-        private void MouseWheelChanged(object sender, MouseWheelEventArgs e)
+        private void MouseWheelChanged(MouseWheelEventArgs e)
         {
-            Behavior.MouseWheelChanged(State, MouseWheelSpeed * e.DeltaPrecise);
+            float delta = e.OffsetY - oldMouseWheelOffset;
+            Behavior.MouseWheelChanged(State, MouseWheelSpeed * delta);
+            oldMouseWheelOffset = e.OffsetY;
         }
 
         /// <summary>

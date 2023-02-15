@@ -9,6 +9,9 @@
 
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace ObjectTK.Tools.Cameras
 {
@@ -18,14 +21,16 @@ namespace ObjectTK.Tools.Cameras
     public class GimbalBehavior
         : ThirdPersonBehavior
     {
+        public GimbalBehavior(GameWindow gw) : base(gw) { }
+
         public override void MouseMove(CameraState state, Vector2 delta)
         {
-            var mouse = Mouse.GetState();
+            var mouse = Window.MouseState;
             if (mouse.IsButtonDown(MouseButton.Left))
             {
                 base.MouseMove(state, delta);
                 var leftRight = Vector3.Cross(state.Up, state.LookAt);
-                Vector3.Cross(ref state.LookAt, ref leftRight, out state.Up);
+                Vector3.Cross(state.LookAt, leftRight, out state.Up);
                 state.Up.Normalize();
             }
         }

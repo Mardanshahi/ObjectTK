@@ -8,6 +8,7 @@
 //
 
 using OpenTK;
+using OpenTK.Mathematics;
 
 namespace ObjectTK.Tools.Cameras
 {

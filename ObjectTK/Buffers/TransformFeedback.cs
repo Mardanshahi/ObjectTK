@@ -10,7 +10,7 @@
 using System;
 using ObjectTK.Exceptions;
 using ObjectTK.Shaders.Variables;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace ObjectTK.Buffers
 {

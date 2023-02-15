@@ -8,7 +8,7 @@
 //
 
 using ObjectTK.Exceptions;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace ObjectTK
 {

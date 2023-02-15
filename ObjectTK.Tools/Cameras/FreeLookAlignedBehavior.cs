@@ -8,12 +8,16 @@
 //
 
 using OpenTK;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Desktop;
 
 namespace ObjectTK.Tools.Cameras
 {
     public class FreeLookAlignedBehavior
         : FreeLookBehavior
     {
+        public FreeLookAlignedBehavior(GameWindow gw) : base(gw) { }
+
         public Vector3 AlignmentPoint;
 
         public override void UpdateFrame(CameraState state, float step)
