@@ -27,7 +27,7 @@ namespace ObjectTK.Tools.Cameras
             var forward = Vector3.Cross(leftRight, state.Up);
             // rotate look at direction
             var rot = Matrix4.CreateFromAxisAngle(state.Up, -delta.X) * Matrix4.CreateFromAxisAngle(leftRight, delta.Y);
-            Vector3.Transform(ref state.LookAt, ref rot, out state.LookAt);
+            Vector3.TransformVector(ref state.LookAt, ref rot, out state.LookAt);
             // renormalize to prevent summing up of floating point errors
             state.LookAt.Normalize();
             // flip up vector when pitched more than +/-90� from the forward direction

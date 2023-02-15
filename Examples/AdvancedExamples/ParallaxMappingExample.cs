@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using Examples.Shaders;
 using ObjectTK.Buffers;
 using ObjectTK.Shaders;
@@ -179,41 +180,45 @@ namespace Examples.AdvancedExamples
 
         protected void OnUpdateFrame(object sender, FrameEventArgs e)
         {
-            if (Keyboard[Key.Space]) Trace.WriteLine("GL: " + GL.GetError());
+            var input = Keyboard.GetState();
+
+            if (input.IsKeyDown(Key.Space))
+                Trace.WriteLine("GL: " + GL.GetError());
             var factor = (float)e.Time;
-            if (Keyboard[Key.Q])
+            if (input.IsKeyDown(Key.Q))
             {
                 _materialScaleAndBiasAndShininess.X += factor;
                 Trace.WriteLine("Scale: " + _materialScaleAndBiasAndShininess.X + " Bias: " + _materialScaleAndBiasAndShininess.Y);
             }
-            if (Keyboard[Key.A])
+            if (input.IsKeyDown(Key.A))
             {
                 _materialScaleAndBiasAndShininess.X -= factor;
                 Trace.WriteLine("Scale: " + _materialScaleAndBiasAndShininess.X + " Bias: " + _materialScaleAndBiasAndShininess.Y);
             }
-            if (Keyboard[Key.W])
+            if (input.IsKeyDown(Key.W))
             {
                 _materialScaleAndBiasAndShininess.Y += factor;
                 Trace.WriteLine("Scale: " + _materialScaleAndBiasAndShininess.X + " Bias: " + _materialScaleAndBiasAndShininess.Y);
             }
-            if (Keyboard[Key.S])
+            if (input.IsKeyDown(Key.S))
             {
                 _materialScaleAndBiasAndShininess.Y -= factor;
                 Trace.WriteLine("Scale: " + _materialScaleAndBiasAndShininess.X + " Bias: " + _materialScaleAndBiasAndShininess.Y);
             }
-            if (Keyboard[Key.E])
+            if (input.IsKeyDown(Key.E))
             {
                 _materialScaleAndBiasAndShininess.Z += factor*100;
                 Trace.WriteLine("Shininess: " + _materialScaleAndBiasAndShininess.Z);
             }
-            if (Keyboard[Key.D])
+            if (input.IsKeyDown(Key.D))
             {
                 _materialScaleAndBiasAndShininess.Z -= factor*100;
                 Trace.WriteLine("Shininess: " + _materialScaleAndBiasAndShininess.Z);
             }
+            var inputMouse = Mouse.GetState();
 
-            _lightPosition.X = (-(Width / 2) + Mouse.X) / 100f;
-            _lightPosition.Y = ((Height / 2) - Mouse.Y) / 100f;
+            _lightPosition.X = (-(Width / 2) + inputMouse.X) / 100f;
+            _lightPosition.Y = ((Height / 2) - inputMouse.Y) / 100f;
         }
 
         protected void OnRenderFrame(object sender, FrameEventArgs e)
