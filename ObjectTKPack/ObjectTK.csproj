@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ObjectTK\ObjectTK.Compiler\ObjectTK.Compiler.csproj" />
+    <ProjectReference Include="..\..\ObjectTK\ObjectTK.Tools\ObjectTK.Tools.csproj" />
+    <ProjectReference Include="..\..\ObjectTK\ObjectTK\ObjectTK.Core.csproj" />
+  </ItemGroup>
+
+</Project>
