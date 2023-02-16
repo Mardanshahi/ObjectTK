@@ -1,15 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>WinExe</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ObjectTK.Compiler\ObjectTK.Compiler.csproj" />
-    <ProjectReference Include="..\ObjectTK.Tools\ObjectTK.Tools.csproj" />
-    <ProjectReference Include="..\ObjectTK\ObjectTK.csproj" />
+    <ProjectReference Include="..\..\ObjectTKNuget\ObjectTK\ObjectTK.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Textures\checker.jpg">
