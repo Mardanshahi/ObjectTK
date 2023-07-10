@@ -1,5 +1,5 @@
 ﻿-- Vertex
-#version 140
+#version 330
 in vec3 InPosition;
 in vec2 InTexCoord;
 
@@ -16,7 +16,7 @@ void main()
 }
 
 -- Fragment
-#version 140
+#version 330
 smooth in vec2 TexCoord;
 
 out vec4 FragColor;

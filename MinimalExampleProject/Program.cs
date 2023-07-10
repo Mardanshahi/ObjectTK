@@ -15,6 +15,8 @@ namespace MinimalExampleProject
                 WindowState = WindowState.Normal,
                 Size = new Vector2i(800, 600),
                 Title = "Minimal Example Project",
+                API = ContextAPI.OpenGL,
+                APIVersion = new System.Version(3, 3),
                 // This is needed to run on macos
                 Flags = ContextFlags.ForwardCompatible,
             };
