@@ -1,84 +1,131 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 //using Examples.Shaders;
 using ObjectTK.Buffers;
 using ObjectTK.Shaders;
+using ObjectTK.Textures;
+using ObjectTK.Tools.Shapes;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace MinimalExampleProject
 {
     public class Game : ExampleWindow
     {
-        private ExampleProgram _program;
-        private VertexArray _vao;
-        private Buffer<Vector3> _vbo;
+        private Texture2D _texture;
+
+        private SimpleTextureProgram _textureProgram;
+
+        private TexturedCube _cube;
+        private VertexArray _cubeVao;
+
+        private Matrix4 _baseView;
+        private Matrix4 _objectView;
+
+        private Vector3[] _rotateVectors = new[] { Vector3.Zero, Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ, Vector3.One };
+        private const int _defaultRotateIndex = 4;
+
+        private int _rotateIndex = _defaultRotateIndex;
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
         public Game()
         {
         }
 
-        protected override void OnLoad()
+        protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
-            // initialize shader (load sources, create/compile/link shader program, error checking)
-            // when using the factory method the shader sources are retrieved from the ShaderSourceAttributes
-            _program = ProgramFactory.Create<ExampleProgram>();
-            // this program will be used all the time so just activate it once and for all
-            _program.Use();
+            switch (e.Key)
+            {
+                case Keys.R:
+                    _objectView = _baseView = Matrix4.Identity;
+                    _rotateIndex = _defaultRotateIndex;
+                    _stopwatch.Restart();
+                    break;
 
-            // create vertices for a triangle
-            var vertices = new[] { new Vector3(-1, -1, 0), new Vector3(1, -1, 0), new Vector3(0, 1, 0) };
+                case Keys.Space:
+                    _baseView = _objectView;
+                    _rotateIndex = (_rotateIndex + 1) % _rotateVectors.Length;
+                    _stopwatch.Restart();
+                    break;
 
-            // create buffer object and upload vertex data
-            _vbo = new Buffer<Vector3>();
-            _vbo.Init(BufferTarget.ArrayBuffer, vertices);
-
-            // create and bind a vertex array
-            _vao = new VertexArray();
-            _vao.Bind();
-            // set up binding of the shader variable to the buffer object
-            _vao.BindAttribute(_program.InPosition, _vbo);
-
-            // set camera position
-            Camera.DefaultState.Position = new Vector3(0, 0, 3);
-            Camera.ResetToDefault();
-
-            // set a nice clear color
-            GL.ClearColor(Color.MidnightBlue);
+                case Keys.D0:
+                case Keys.D1:
+                case Keys.D2:
+                case Keys.D3:
+                case Keys.D4:
+                    _baseView = _objectView;
+                    _rotateIndex = (e.Key - Keys.D0) % _rotateVectors.Length;
+                    _stopwatch.Restart();
+                    break;
+            }
         }
 
-        protected override void OnUnload()
+        protected override void OnLoad()
         {
-            // Always make sure to properly dispose gl resources to prevent memory leaks.
-            // Most of the examples do not explicitly dispose resources, because
-            // the base class (ExampleWindow) calls GLResource.DisposeAll(this).
-            // This will automatically dispose all objects referenced by class fields
-            // which derive from GLResource. Everything else still has to be disposed manually.
-            _program.Dispose();
-            _vao.Dispose();
-            _vbo.Dispose();
+            // load texture from file
+            using (var bitmap = new Bitmap("Data/Textures/crate.png"))
+            {
+                BitmapTexture.CreateCompatible(bitmap, out _texture);
+                _texture.LoadBitmap(bitmap);
+            }
+
+            // initialize shaders
+            _textureProgram = ProgramFactory.Create<SimpleTextureProgram>();
+
+            // initialize cube object and base view matrix
+            _objectView = _baseView = Matrix4.Identity;
+
+            // initialize demonstration geometry
+            _cube = new TexturedCube();
+            _cube.UpdateBuffers();
+
+            // set up vertex attributes for the quad
+            _cubeVao = new VertexArray();
+            _cubeVao.Bind();
+            _cubeVao.BindAttribute(_textureProgram.InPosition, _cube.VertexBuffer);
+            _cubeVao.BindAttribute(_textureProgram.InTexCoord, _cube.TexCoordBuffer);
+
+            // Enable culling, our cube vertices are defined inside out, so we flip them
+            GL.Enable(EnableCap.CullFace);
+            GL.CullFace(CullFaceMode.Back);
+
+            // initialize camera position
+            Camera.DefaultState.Position = new Vector3(0, 0, 4);
+            Camera.ResetToDefault();
+
+            // set nice clear color
+            GL.ClearColor(Color.MidnightBlue);
+
+            _stopwatch.Restart();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             // set up viewport
             GL.Viewport(0, 0, Size.X, Size.Y);
-            // clear the back buffer
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            // set up modelview and perspective matrix
             SetupPerspective();
 
-            // calculate the MVP matrix and set it to the shaders uniform
-            _program.ModelViewProjectionMatrix.Set(ModelView * Projection);
-            // draw the buffer which contains the triangle
-            _vao.DrawArrays(PrimitiveType.Triangles, 0, _vbo.ElementCount);
+            // determinate object view rotation vectors and apply them
+            _objectView = _baseView;
+            //var rotation = _rotateVectors[_rotateIndex];
+            //if (rotation != Vector3.Zero)
+            //    _objectView *= Matrix4.CreateFromAxisAngle(_rotateVectors[_rotateIndex], (float)(_stopwatch.Elapsed.TotalSeconds * 1.0));
+
+            // set transformation matrix
+            _textureProgram.Use();
+            _textureProgram.ModelViewProjectionMatrix.Set(_objectView * ModelView * Projection);
+
+            // render cube with texture
+            _cubeVao.Bind();
+            _cubeVao.DrawArrays(_cube.DefaultMode, 0, _cube.VertexBuffer.ElementCount);
 
             // swap buffers
             SwapBuffers();
         }
-
-
     }
 }
