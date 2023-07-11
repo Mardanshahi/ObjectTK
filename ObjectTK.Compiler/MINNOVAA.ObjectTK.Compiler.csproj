@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>Exe</OutputType>
-    <AssemblyName>ObjectTKC</AssemblyName>
+    <AssemblyName>MINNOVAA.ObjectTKC</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
