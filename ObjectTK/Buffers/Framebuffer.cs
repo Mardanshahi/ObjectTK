@@ -8,11 +8,11 @@
 //
 
 using System;
-using ObjectTK.Exceptions;
-using ObjectTK.Textures;
+using MINNOVAA.ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Textures;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Buffers
+namespace MINNOVAA.ObjectTK.Buffers
 {
     /// <summary>
     /// Represents a framebuffer object.

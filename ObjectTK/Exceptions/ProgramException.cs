@@ -10,7 +10,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace ObjectTK.Exceptions
+namespace MINNOVAA.ObjectTK.Exceptions
 {
     /// <summary>
     /// The exception that is thrown when a program related error occurs.

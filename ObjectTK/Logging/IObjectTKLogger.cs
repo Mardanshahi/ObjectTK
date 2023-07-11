@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ObjectTK.Logging
+namespace MINNOVAA.ObjectTK.Logging
 {
     public interface IObjectTKLogger
     {

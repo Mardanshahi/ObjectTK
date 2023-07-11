@@ -10,7 +10,7 @@
 using System;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders.Variables
+namespace MINNOVAA.ObjectTK.Shaders.Variables
 {
     /// <summary>
     /// Defines default values when binding buffers to the attributed <see cref="VertexAttrib"/>.

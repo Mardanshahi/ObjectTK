@@ -9,10 +9,10 @@
 
 using System;
 using System.Linq;
-using ObjectTK.Shaders.Sources;
+using MINNOVAA.ObjectTK.Shaders.Sources;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders
+namespace MINNOVAA.ObjectTK.Shaders
 {
     /// <summary>
     /// Represents a program object which contains compute shaders.

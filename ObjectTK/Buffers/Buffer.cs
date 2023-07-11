@@ -11,7 +11,7 @@ using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Buffers
+namespace MINNOVAA.ObjectTK.Buffers
 {
     /// <summary>
     /// Represents a buffer object.

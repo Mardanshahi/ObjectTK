@@ -1,14 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <OutputType>Library</OutputType>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <UseWindowsForms>true</UseWindowsForms>
-    <Platforms>AnyCPU;x64;x86</Platforms>
+
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
@@ -18,9 +14,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OpenTK" Version="4.7.5" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\ObjectTK\ObjectTK.Core.csproj" />
+    <ProjectReference Include="..\ObjectTK.Compiler\MINNOVAA.ObjectTK.Compiler.csproj" />
+    <ProjectReference Include="..\ObjectTK.Tools\MINNOVAA.ObjectTK.Tools.csproj" />
+    <ProjectReference Include="..\ObjectTK\MINNOVAA.ObjectTK.Core.csproj" />
   </ItemGroup>
+
 </Project>

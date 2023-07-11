@@ -9,9 +9,9 @@
 
 using System;
 using System.Reflection;
-using ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Exceptions;
 
-namespace ObjectTK
+namespace MINNOVAA.ObjectTK
 {
     /// <summary>
     /// Represents an OpenGL resource.<br/>

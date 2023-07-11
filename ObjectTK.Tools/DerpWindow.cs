@@ -13,7 +13,7 @@ using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 
-namespace ObjectTK.Tools
+namespace MINNOVAA.ObjectTK.Tools
 {
     /// <summary>
     /// Provides basic functionality to an OpenTK GameWindow such as camera controls,

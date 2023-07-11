@@ -9,7 +9,7 @@
 
 using System.Reflection;
 
-namespace ObjectTK.Shaders.Variables
+namespace MINNOVAA.ObjectTK.Shaders.Variables
 {
     /// <summary>
     /// Represents a shader variable identified by its name and the corresponding program handle.

@@ -7,10 +7,10 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Exceptions;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK
+namespace MINNOVAA.ObjectTK
 {
     internal static class Utility
     {

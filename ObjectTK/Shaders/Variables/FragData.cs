@@ -9,7 +9,7 @@
 
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders.Variables
+namespace MINNOVAA.ObjectTK.Shaders.Variables
 {
     /// <summary>
     /// Represents a fragment shader output.<br/>

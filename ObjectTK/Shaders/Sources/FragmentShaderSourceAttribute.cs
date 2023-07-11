@@ -9,7 +9,7 @@
 
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders.Sources
+namespace MINNOVAA.ObjectTK.Shaders.Sources
 {
     /// <summary>
     /// Specifies the source of a fragment shader.

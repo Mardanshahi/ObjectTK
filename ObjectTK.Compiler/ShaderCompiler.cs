@@ -12,12 +12,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using ObjectTK.Exceptions;
-using ObjectTK.Shaders;
-using ObjectTK.Shaders.Sources;
+using MINNOVAA.ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Shaders;
+using MINNOVAA.ObjectTK.Shaders.Sources;
 using OpenTK.Windowing.Desktop;
 
-namespace ObjectTK.Compiler
+namespace MINNOVAA.ObjectTK.Compiler
 {
     /// <summary>
     /// Compiles all shader programs contained in assemblies given per command line arguments and outputs errors in a MSBuild and Visual Studio friendly way.<br/>

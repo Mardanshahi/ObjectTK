@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders.Sources
+namespace MINNOVAA.ObjectTK.Shaders.Sources
 {
     /// <summary>
     /// Specifies a source file which contains a single shader of predefined type.

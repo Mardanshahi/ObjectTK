@@ -12,7 +12,7 @@ using System;
 using OpenTK;
 using OpenTK.Mathematics;
 
-namespace ObjectTK
+namespace MINNOVAA.ObjectTK
 {
     /// <summary>
     /// Provides mathematical constants and functions with float precision.

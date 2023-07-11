@@ -9,7 +9,7 @@
 
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Textures
+namespace MINNOVAA.ObjectTK.Textures
 {
     /// <summary>
     /// Represents a 2D multisample texture.<br/>

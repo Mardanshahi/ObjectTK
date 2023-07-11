@@ -9,7 +9,7 @@
 
 using System;
 
-namespace ObjectTK.Exceptions
+namespace MINNOVAA.ObjectTK.Exceptions
 {
     /// <summary>
     /// The exception that is thrown when an ObjectTK related error occurs.

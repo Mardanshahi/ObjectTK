@@ -8,10 +8,10 @@
 //
 
 using System;
-using ObjectTK.Buffers;
+using MINNOVAA.ObjectTK.Buffers;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Textures
+namespace MINNOVAA.ObjectTK.Textures
 {
     /// <summary>
     /// Represents a buffer texture.<br/>

@@ -10,7 +10,7 @@
 using OpenTK;
 using OpenTK.Mathematics;
 
-namespace ObjectTK.Tools.Cameras
+namespace MINNOVAA.ObjectTK.Tools.Cameras
 {
     /// <summary>
     /// Represents the state of a camera.<br/>

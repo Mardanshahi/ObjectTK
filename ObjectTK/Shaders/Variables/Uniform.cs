@@ -11,7 +11,7 @@ using System;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace ObjectTK.Shaders.Variables
+namespace MINNOVAA.ObjectTK.Shaders.Variables
 {
     /// <summary>
     /// Represents a uniform.

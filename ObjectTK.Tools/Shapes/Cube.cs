@@ -11,7 +11,7 @@ using OpenTK;
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Tools.Shapes
+namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
     public class Cube
         : IndexedShape

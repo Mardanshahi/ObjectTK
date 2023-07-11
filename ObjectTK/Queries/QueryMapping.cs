@@ -10,10 +10,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Exceptions;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Queries
+namespace MINNOVAA.ObjectTK.Queries
 {
     /// <summary>
     /// Provides named queries of hardware counters.

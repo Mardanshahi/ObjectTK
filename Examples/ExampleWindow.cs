@@ -1,8 +1,8 @@
 ﻿using System;
-using ObjectTK;
-using ObjectTK.Shaders;
-using ObjectTK.Tools;
-using ObjectTK.Tools.Cameras;
+using MINNOVAA.ObjectTK;
+using MINNOVAA.ObjectTK.Shaders;
+using MINNOVAA.ObjectTK.Tools;
+using MINNOVAA.ObjectTK.Tools.Cameras;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;

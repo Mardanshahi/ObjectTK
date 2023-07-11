@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using Examples.Shaders;
-using ObjectTK.Buffers;
-using ObjectTK.Shaders;
+using MINNOVAA.ObjectTK.Buffers;
+using MINNOVAA.ObjectTK.Shaders;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Reflection;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders.Variables
+namespace MINNOVAA.ObjectTK.Shaders.Variables
 {
     /// <summary>
     /// Represents a vertex attribute.

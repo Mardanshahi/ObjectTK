@@ -11,7 +11,7 @@ using System;
 using System.Linq;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Textures
+namespace MINNOVAA.ObjectTK.Textures
 {
     /// <summary>
     /// Provides methods for creating texture objects in ways not covered by constructors.

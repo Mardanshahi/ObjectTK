@@ -1,6 +1,6 @@
-﻿using ObjectTK.Shaders;
-using ObjectTK.Shaders.Sources;
-using ObjectTK.Shaders.Variables;
+﻿using MINNOVAA.ObjectTK.Shaders;
+using MINNOVAA.ObjectTK.Shaders.Sources;
+using MINNOVAA.ObjectTK.Shaders.Variables;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;

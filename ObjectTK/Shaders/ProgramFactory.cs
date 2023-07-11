@@ -12,10 +12,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using ObjectTK.Exceptions;
-using ObjectTK.Shaders.Sources;
+using MINNOVAA.ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Shaders.Sources;
 
-namespace ObjectTK.Shaders
+namespace MINNOVAA.ObjectTK.Shaders
 {
     /// <summary>
     /// Contains methods to automatically initialize program objects.

@@ -9,9 +9,9 @@
 
 using System;
 using System.Runtime.Serialization;
-using ObjectTK.Shaders.Variables;
+using MINNOVAA.ObjectTK.Shaders.Variables;
 
-namespace ObjectTK.Exceptions
+namespace MINNOVAA.ObjectTK.Exceptions
 {
     /// <summary>
     /// The exception that is thrown when the generic type parameter used for an instance of <see cref="Uniform{T}"/> is not supported.

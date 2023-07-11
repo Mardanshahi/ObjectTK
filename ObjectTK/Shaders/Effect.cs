@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ObjectTK.Shaders
+namespace MINNOVAA.ObjectTK.Shaders
 {
     /// <summary>
     /// Represents an effect file which may contain several sections, each containing the source of a shader.<br/>

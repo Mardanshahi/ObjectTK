@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using ObjectTK;
+using MINNOVAA.ObjectTK;
 using OpenTK;
 using OpenTK.Windowing.Desktop;
 

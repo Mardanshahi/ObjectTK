@@ -7,10 +7,10 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using ObjectTK.Buffers;
+using MINNOVAA.ObjectTK.Buffers;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Tools.Shapes
+namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
     public abstract class ColoredShape
         : IndexedShape

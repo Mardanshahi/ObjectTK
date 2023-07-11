@@ -8,11 +8,11 @@
 //
 
 using System.Linq;
-using ObjectTK.Exceptions;
-using ObjectTK.Shaders.Variables;
+using MINNOVAA.ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Shaders.Variables;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders
+namespace MINNOVAA.ObjectTK.Shaders
 {
     /// <summary>
     /// Represents a program object which utilizes transform feedback.

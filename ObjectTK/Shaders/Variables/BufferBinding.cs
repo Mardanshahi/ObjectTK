@@ -8,10 +8,10 @@
 //
 
 using System;
-using ObjectTK.Buffers;
+using MINNOVAA.ObjectTK.Buffers;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders.Variables
+namespace MINNOVAA.ObjectTK.Shaders.Variables
 {
     /// <summary>
     /// Represents a shader buffer binding point identified by its resource index.

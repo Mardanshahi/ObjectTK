@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 
 using Examples.Shaders;
 
-using ObjectTK.Buffers;
-using ObjectTK.Shaders;
-using ObjectTK.Textures;
+using MINNOVAA.ObjectTK.Buffers;
+using MINNOVAA.ObjectTK.Shaders;
+using MINNOVAA.ObjectTK.Textures;
 
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;

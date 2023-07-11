@@ -13,7 +13,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
-namespace ObjectTK.Tools.Cameras
+namespace MINNOVAA.ObjectTK.Tools.Cameras
 {
     /// <summary>
     /// TODO: Does not yet work like it should.

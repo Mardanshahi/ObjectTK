@@ -14,7 +14,7 @@ using System.Linq;
 using OpenTK;
 using OpenTK.Mathematics;
 
-namespace ObjectTK
+namespace MINNOVAA.ObjectTK
 {
     /// <summary>
     /// Contains extension methods.

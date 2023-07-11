@@ -10,7 +10,7 @@ namespace Examples
         public static void Main()
         {
             // initialize log4net via app.config if available
-            if (ObjectTK.Logging.LogFactory.IsAvailable)
+            if (MINNOVAA.ObjectTK.Logging.LogFactory.IsAvailable)
                 ConfigureLogging();
 
             // show example browser

@@ -12,7 +12,7 @@ using System.Drawing;
 using System.Linq;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Tools.Shapes
+namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
     public class ColorCube
         : ColoredShape

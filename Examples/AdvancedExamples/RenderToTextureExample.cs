@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using Examples.Shaders;
-using ObjectTK.Buffers;
-using ObjectTK.Shaders;
-using ObjectTK.Textures;
-using ObjectTK.Tools.Shapes;
+using MINNOVAA.ObjectTK.Buffers;
+using MINNOVAA.ObjectTK.Shaders;
+using MINNOVAA.ObjectTK.Textures;
+using MINNOVAA.ObjectTK.Tools.Shapes;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;

@@ -13,7 +13,7 @@ using OpenTK.Mathematics;
 
 using System.Linq;
 
-namespace ObjectTK.Tools.Shapes
+namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
     public class TexturedCube
         : TexturedShape

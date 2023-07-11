@@ -9,10 +9,10 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Exceptions;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders
+namespace MINNOVAA.ObjectTK.Shaders
 {
     /// <summary>
     /// Represents a shader object.

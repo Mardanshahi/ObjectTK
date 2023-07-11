@@ -7,12 +7,12 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using ObjectTK.Buffers;
+using MINNOVAA.ObjectTK.Buffers;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace ObjectTK.Tools.Shapes
+namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
     /// <summary>
     /// TODO: needs a total refactoring

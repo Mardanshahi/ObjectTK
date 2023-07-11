@@ -9,7 +9,7 @@
 
 using System;
 
-namespace ObjectTK
+namespace MINNOVAA.ObjectTK
 {
     /// <summary>
     /// Represents an OpenGL handle.<br/>

@@ -11,12 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Exceptions;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace ObjectTK.Shaders.Variables
+namespace MINNOVAA.ObjectTK.Shaders.Variables
 {
     internal abstract class UniformSetter
     {

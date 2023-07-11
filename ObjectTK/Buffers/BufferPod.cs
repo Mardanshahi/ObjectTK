@@ -10,7 +10,7 @@
 using System;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Buffers
+namespace MINNOVAA.ObjectTK.Buffers
 {
     /// <summary>
     /// Represents two buffer objects which are bundled together to simplify ping-ponging.

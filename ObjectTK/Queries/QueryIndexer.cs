@@ -8,10 +8,10 @@
 //
 
 using System.Collections.Generic;
-using ObjectTK.Exceptions;
+using MINNOVAA.ObjectTK.Exceptions;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Queries
+namespace MINNOVAA.ObjectTK.Queries
 {
     /// <summary>
     /// Base class for <see cref="QueryMapping{T}"/>.<br/>

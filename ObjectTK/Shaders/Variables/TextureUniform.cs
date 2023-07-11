@@ -7,10 +7,10 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using ObjectTK.Textures;
+using MINNOVAA.ObjectTK.Textures;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ObjectTK.Shaders.Variables
+namespace MINNOVAA.ObjectTK.Shaders.Variables
 {
     /// <summary>
     /// Represents a typed texture uniform. Allows only textures of the given type to be bound.

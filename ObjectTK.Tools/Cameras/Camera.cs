@@ -14,7 +14,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 
-namespace ObjectTK.Tools.Cameras
+namespace MINNOVAA.ObjectTK.Tools.Cameras
 {
     public class Camera
     {

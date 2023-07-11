@@ -10,7 +10,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace ObjectTK
+namespace MINNOVAA.ObjectTK
 {
     /// <summary>Represents a 3D vector using three 32-bit integer values.</summary>
     /// <remarks>

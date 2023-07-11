@@ -11,7 +11,7 @@ using OpenTK;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Desktop;
 
-namespace ObjectTK.Tools.Cameras
+namespace MINNOVAA.ObjectTK.Tools.Cameras
 {
     public abstract class CameraBehavior
     {

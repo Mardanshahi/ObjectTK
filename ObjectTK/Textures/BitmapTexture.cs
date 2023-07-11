@@ -13,7 +13,7 @@ using System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL4;
 using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
 
-namespace ObjectTK.Textures
+namespace MINNOVAA.ObjectTK.Textures
 {
     /// <summary>
     /// Contains extension methods for texture types.
