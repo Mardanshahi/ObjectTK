@@ -15,7 +15,7 @@ namespace ObjectTK.Tools.Shapes
     public abstract class ColoredShape
         : IndexedShape
     {
-        public uint[] Colors { get; protected set; }
+        public uint[] Colors { get; set; }
         public Buffer<uint> ColorBuffer { get; protected set; }
 
         public override void UpdateBuffers()

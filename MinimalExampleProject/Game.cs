@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+
 //using Examples.Shaders;
 using ObjectTK.Buffers;
 using ObjectTK.Shaders;
@@ -18,9 +21,10 @@ namespace MinimalExampleProject
     {
         private Texture2D _texture;
 
-        private SimpleTextureProgram _textureProgram;
+        //private SimpleTextureProgram _textureProgram;
+        private SimpleColorProgram _colorProgram;
 
-        private TexturedCube _cube;
+        private ColorCube _cube;
         private VertexArray _cubeVao;
 
         private Matrix4 _baseView;
@@ -74,20 +78,39 @@ namespace MinimalExampleProject
             }
 
             // initialize shaders
-            _textureProgram = ProgramFactory.Create<SimpleTextureProgram>();
+            //_textureProgram = ProgramFactory.Create<SimpleTextureProgram>();
+            _colorProgram = ProgramFactory.Create<SimpleColorProgram>();
 
             // initialize cube object and base view matrix
             _objectView = _baseView = Matrix4.Identity;
 
             // initialize demonstration geometry
-            _cube = new TexturedCube();
+            _cube = new ColorCube();
+            uint ToRgba32(Color color)
+            {
+                return (uint)(color.A << 24 | color.B << 16 | color.G << 8 | color.R);
+            }
+
+            _cube.Colors = new List<Color>
+            {
+                Color.White,
+                Color.DarkRed,
+                Color.Gold,
+                Color.Gold,
+                Color.DarkRed,
+                Color.DarkRed,
+                Color.Gold,
+                Color.Gold
+            }.Select(_ => ToRgba32(_)).ToArray();
             _cube.UpdateBuffers();
 
             // set up vertex attributes for the quad
+            // set up vertex attributes for the cube
             _cubeVao = new VertexArray();
             _cubeVao.Bind();
-            _cubeVao.BindAttribute(_textureProgram.InPosition, _cube.VertexBuffer);
-            _cubeVao.BindAttribute(_textureProgram.InTexCoord, _cube.TexCoordBuffer);
+            _cubeVao.BindAttribute(_colorProgram.InPosition, _cube.VertexBuffer);
+            _cubeVao.BindAttribute(_colorProgram.InColor, _cube.ColorBuffer);
+            _cubeVao.BindElementBuffer(_cube.IndexBuffer);
 
             // Enable culling, our cube vertices are defined inside out, so we flip them
             GL.Enable(EnableCap.CullFace);
@@ -117,12 +140,12 @@ namespace MinimalExampleProject
             //    _objectView *= Matrix4.CreateFromAxisAngle(_rotateVectors[_rotateIndex], (float)(_stopwatch.Elapsed.TotalSeconds * 1.0));
 
             // set transformation matrix
-            _textureProgram.Use();
-            _textureProgram.ModelViewProjectionMatrix.Set(_objectView * ModelView * Projection);
+            _colorProgram.Use();
+            _colorProgram.ModelViewProjectionMatrix.Set(_objectView * ModelView * Projection);
 
             // render cube with texture
             _cubeVao.Bind();
-            _cubeVao.DrawArrays(_cube.DefaultMode, 0, _cube.VertexBuffer.ElementCount);
+            _cubeVao.DrawElements(PrimitiveType.Triangles, _cube.IndexBuffer.ElementCount);
 
             // swap buffers
             SwapBuffers();

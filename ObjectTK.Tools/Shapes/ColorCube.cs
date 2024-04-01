@@ -31,7 +31,7 @@ namespace ObjectTK.Tools.Shapes
             // add color to the vertices
             Colors = new List<Color>
             {
-                Color.DarkRed,
+                Color.Black,
                 Color.DarkRed,
                 Color.Gold,
                 Color.Gold,
