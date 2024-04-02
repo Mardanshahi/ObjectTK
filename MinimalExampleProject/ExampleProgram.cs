@@ -2,8 +2,7 @@
 using MINNOVAA.ObjectTK.Shaders.Sources;
 using MINNOVAA.ObjectTK.Shaders.Variables;
 using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
+using OpenTK.Graphics.OpenGL;
 
 namespace MinimalExampleProject
 {

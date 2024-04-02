@@ -9,8 +9,7 @@
 
 using System;
 using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
+using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Tools.Shapes
 {

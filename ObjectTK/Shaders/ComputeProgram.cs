@@ -10,7 +10,7 @@
 using System;
 using System.Linq;
 using MINNOVAA.ObjectTK.Shaders.Sources;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Shaders
 {

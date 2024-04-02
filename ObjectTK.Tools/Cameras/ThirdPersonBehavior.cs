@@ -9,9 +9,6 @@
 
 using OpenTK;
 using OpenTK.Input;
-using OpenTK.Mathematics;
-using OpenTK.Windowing.Desktop;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace MINNOVAA.ObjectTK.Tools.Cameras
 {
@@ -19,8 +16,6 @@ namespace MINNOVAA.ObjectTK.Tools.Cameras
         : CameraBehavior
     {
         public Vector3 Origin;
-
-        public ThirdPersonBehavior(GameWindow gw) : base(gw) { }
 
         protected void UpdateDistance(CameraState state, float scale)
         {
@@ -36,7 +31,7 @@ namespace MINNOVAA.ObjectTK.Tools.Cameras
 
         public override void MouseMove(CameraState state, Vector2 delta)
         {
-            var mouse = Window.MouseState;
+            var mouse = Mouse.GetState();
             if (mouse.IsButtonDown(MouseButton.Left))
             {
                 // rotate look direction with mouse

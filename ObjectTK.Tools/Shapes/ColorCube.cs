@@ -10,7 +10,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Tools.Shapes
 {

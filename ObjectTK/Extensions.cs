@@ -12,7 +12,6 @@ using System.Drawing;
 using System.Linq;
 
 using OpenTK;
-using OpenTK.Mathematics;
 
 namespace MINNOVAA.ObjectTK
 {

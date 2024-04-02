@@ -3,10 +3,9 @@ using System.Drawing;
 //using Examples.Shaders;
 using MINNOVAA.ObjectTK.Buffers;
 using MINNOVAA.ObjectTK.Shaders;
+using MINNOVAA.ObjectTK.Tools.Cameras;
 using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
-using OpenTK.Windowing.Common;
+using OpenTK.Graphics.OpenGL;
 
 namespace MinimalExampleProject
 {
@@ -18,9 +17,12 @@ namespace MinimalExampleProject
 
         public Game()
         {
+            Load += OnLoad;
+            Unload += OnUnload;
+            RenderFrame += OnRenderFrame;
         }
 
-        protected override void OnLoad()
+        private void OnLoad(object sender, EventArgs e)
         {
             // initialize shader (load sources, create/compile/link shader program, error checking)
             // when using the factory method the shader sources are retrieved from the ShaderSourceAttributes
@@ -49,7 +51,7 @@ namespace MinimalExampleProject
             GL.ClearColor(Color.MidnightBlue);
         }
 
-        protected override void OnUnload()
+        private void OnUnload(object sender, EventArgs e)
         {
             // Always make sure to properly dispose gl resources to prevent memory leaks.
             // Most of the examples do not explicitly dispose resources, because
@@ -61,10 +63,10 @@ namespace MinimalExampleProject
             _vbo.Dispose();
         }
 
-        protected override void OnRenderFrame(FrameEventArgs e)
+        private void OnRenderFrame(object sender, FrameEventArgs e)
         {
             // set up viewport
-            GL.Viewport(0, 0, Size.X, Size.Y);
+            GL.Viewport(0, 0, Width, Height);
             // clear the back buffer
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             // set up modelview and perspective matrix
@@ -78,6 +80,7 @@ namespace MinimalExampleProject
             // swap buffers
             SwapBuffers();
         }
+
 
 
     }

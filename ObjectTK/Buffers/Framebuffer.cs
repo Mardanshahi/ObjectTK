@@ -10,7 +10,7 @@
 using System;
 using MINNOVAA.ObjectTK.Exceptions;
 using MINNOVAA.ObjectTK.Textures;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Buffers
 {

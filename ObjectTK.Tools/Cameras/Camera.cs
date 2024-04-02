@@ -10,9 +10,6 @@
 using System;
 using OpenTK;
 using OpenTK.Input;
-using OpenTK.Mathematics;
-using OpenTK.Windowing.Common;
-using OpenTK.Windowing.Desktop;
 
 namespace MINNOVAA.ObjectTK.Tools.Cameras
 {
@@ -25,8 +22,6 @@ namespace MINNOVAA.ObjectTK.Tools.Cameras
         public float MouseMoveSpeed = 0.005f;
         public float MouseWheelSpeed = 0.1f;
         public float MoveSpeed = 60;
-
-        private float oldMouseWheelOffset = 0;
 
         public Camera()
         {
@@ -68,21 +63,19 @@ namespace MINNOVAA.ObjectTK.Tools.Cameras
             if (Behavior != null) Behavior.Initialize(State);
         }
 
-        private void UpdateFrame(FrameEventArgs e)
+        private void UpdateFrame(object sender, FrameEventArgs e)
         {
             Behavior.UpdateFrame(State, (float) e.Time * MoveSpeed);
         }
 
-        private void MouseMove(MouseMoveEventArgs e)
+        private void MouseMove(object sender, MouseMoveEventArgs e)
         {
-            Behavior.MouseMove(State, MouseMoveSpeed * new Vector2(-e.DeltaX, -e.DeltaY));
+            Behavior.MouseMove(State, MouseMoveSpeed * new Vector2(e.XDelta, e.YDelta));
         }
         
-        private void MouseWheelChanged(MouseWheelEventArgs e)
+        private void MouseWheelChanged(object sender, MouseWheelEventArgs e)
         {
-            float delta = e.OffsetY - oldMouseWheelOffset;
-            Behavior.MouseWheelChanged(State, MouseWheelSpeed * delta);
-            oldMouseWheelOffset = e.OffsetY;
+            Behavior.MouseWheelChanged(State, MouseWheelSpeed * e.DeltaPrecise);
         }
 
         /// <summary>

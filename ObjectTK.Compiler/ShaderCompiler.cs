@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using MINNOVAA.ObjectTK.Exceptions;
 using MINNOVAA.ObjectTK.Shaders;
 using MINNOVAA.ObjectTK.Shaders.Sources;
-using OpenTK.Windowing.Desktop;
+using OpenTK;
 
 namespace MINNOVAA.ObjectTK.Compiler
 {
@@ -56,7 +56,7 @@ namespace MINNOVAA.ObjectTK.Compiler
         public static void Main(string[] args)
         {
             // create a hidden GameWindow to initialize an OpenGL context
-            using (new GameWindow(GameWindowSettings.Default, NativeWindowSettings.Default))
+            using (new GameWindow())
             {
                 // iterate over given arguments
                 foreach (var path in args)

@@ -8,8 +8,7 @@
 //
 
 using System;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
+using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Shaders.Variables
 {

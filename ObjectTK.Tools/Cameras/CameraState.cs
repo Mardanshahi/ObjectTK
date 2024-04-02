@@ -8,7 +8,6 @@
 //
 
 using OpenTK;
-using OpenTK.Mathematics;
 
 namespace MINNOVAA.ObjectTK.Tools.Cameras
 {

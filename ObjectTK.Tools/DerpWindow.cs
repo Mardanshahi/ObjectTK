@@ -9,9 +9,8 @@
 
 using System;
 using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK.Windowing.Common;
-using OpenTK.Windowing.Desktop;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Tools
 {
@@ -29,8 +28,8 @@ namespace MINNOVAA.ObjectTK.Tools
         /// <summary>
         /// Initializes a new instance of the DerpWindow class.
         /// </summary>
-        protected DerpWindow(GameWindowSettings gws, NativeWindowSettings nws)
-            : base(gws, nws)
+        protected DerpWindow(int width, int height, GraphicsMode mode, string title)
+            : base(width, height, mode, title)
         {
             // log some OpenGL information
             Logger?.Info("OpenGL context information:");
@@ -42,19 +41,20 @@ namespace MINNOVAA.ObjectTK.Tools
             GL.GetInteger(GetPName.NumExtensions, out numExtensions);
             Logger?.DebugFormat("Number available extensions: {0}", numExtensions);
             for (var i = 0; i < numExtensions; i++) Logger?.DebugFormat("{0}: {1}", i, GL.GetString(StringNameIndexed.Extensions, i));
-            Logger?.InfoFormat("Initializing game window: {0}", nws.Title);
+            Logger?.InfoFormat("Initializing game window: {0}", title);
             // set up GameWindow events
+            Resize += OnResize;
+            UpdateFrame += OnUpdateFrame;
             // set up frame timer
             FrameTimer = new FrameTimer();
         }
 
-        protected override void OnResize(ResizeEventArgs e)
+        private void OnResize(object sender, EventArgs eventArgs)
         {
-            Size = e.Size;
-            Logger?.InfoFormat("Window resized to: {0}x{1}", Size.X, Size.Y);
+            Logger?.InfoFormat("Window resized to: {0}x{1}", Width, Height);
         }
 
-        protected override void OnUpdateFrame(FrameEventArgs args)
+        private void OnUpdateFrame(object sender, FrameEventArgs e)
         {
             FrameTimer.Time();
         }

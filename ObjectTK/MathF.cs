@@ -8,9 +8,7 @@
 //
 
 using System;
-
 using OpenTK;
-using OpenTK.Mathematics;
 
 namespace MINNOVAA.ObjectTK
 {

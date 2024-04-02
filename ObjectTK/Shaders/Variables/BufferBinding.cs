@@ -9,7 +9,7 @@
 
 using System;
 using MINNOVAA.ObjectTK.Buffers;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Shaders.Variables
 {
