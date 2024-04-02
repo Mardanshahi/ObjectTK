@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Exe</OutputType>
     <AssemblyName>MINNOVAA.ObjectTKC</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -18,6 +18,5 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OpenTK" Version="4.7.5" />
   </ItemGroup>
 </Project>
