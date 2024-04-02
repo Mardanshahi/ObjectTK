@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 //using Examples.Shaders;
 using MINNOVAA.ObjectTK.Buffers;
 using MINNOVAA.ObjectTK.Shaders;
+using MINNOVAA.ObjectTK.Textures;
 using MINNOVAA.ObjectTK.Tools.Cameras;
+using MINNOVAA.ObjectTK.Tools.Shapes;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -29,37 +32,14 @@ namespace MinimalExampleProject
 
         public Game()
         {
+            Load += OnLoad;
+            Unload += OnUnload;
+            RenderFrame += OnRenderFrame;
         }
 
-        protected override void OnKeyDown(KeyboardKeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Keys.R:
-                    _objectView = _baseView = Matrix4.Identity;
-                    _rotateIndex = _defaultRotateIndex;
-                    _stopwatch.Restart();
-                    break;
+      
 
-                case Keys.Space:
-                    _baseView = _objectView;
-                    _rotateIndex = (_rotateIndex + 1) % _rotateVectors.Length;
-                    _stopwatch.Restart();
-                    break;
-
-                case Keys.D0:
-                case Keys.D1:
-                case Keys.D2:
-                case Keys.D3:
-                case Keys.D4:
-                    _baseView = _objectView;
-                    _rotateIndex = (e.Key - Keys.D0) % _rotateVectors.Length;
-                    _stopwatch.Restart();
-                    break;
-            }
-        }
-
-        protected override void OnLoad()
+        private void OnLoad(object sender, EventArgs e)
         {
             // load texture from file
             using (var bitmap = new Bitmap("Data/Textures/crate.png"))
@@ -97,11 +77,21 @@ namespace MinimalExampleProject
 
             _stopwatch.Restart();
         }
-
-        protected override void OnRenderFrame(FrameEventArgs e)
+        private void OnUnload(object sender, EventArgs e)
+        {
+            // Always make sure to properly dispose gl resources to prevent memory leaks.
+            // Most of the examples do not explicitly dispose resources, because
+            // the base class (ExampleWindow) calls GLResource.DisposeAll(this).
+            // This will automatically dispose all objects referenced by class fields
+            // which derive from GLResource. Everything else still has to be disposed manually.
+            _textureProgram.Dispose();
+            _cubeVao.Dispose();
+            _cube.Dispose();
+        }
+        protected  void OnRenderFrame(object sender, FrameEventArgs e)
         {
             // set up viewport
-            GL.Viewport(0, 0, Size.X, Size.Y);
+            GL.Viewport(0, 0, Width, Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             SetupPerspective();
 
