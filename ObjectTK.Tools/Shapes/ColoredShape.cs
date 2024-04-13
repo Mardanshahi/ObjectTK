@@ -12,11 +12,10 @@ using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
-    public abstract class ColoredShape
-        : IndexedShape
+    public abstract class ColoredShape : IndexedShape , IColoredShape
     {
-        public uint[] Colors { get; protected set; }
-        public Buffer<uint> ColorBuffer { get; protected set; }
+        public uint[] Colors { get; set; }
+        public Buffer<uint> ColorBuffer { get; set; }
 
         public override void UpdateBuffers()
         {

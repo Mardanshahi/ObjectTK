@@ -13,11 +13,10 @@ using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
-    public abstract class TexturedShape
-        : Shape
+    public abstract class TexturedShape   : Shape , ITexturedShape
     {
-        public Vector2[] TexCoords { get; protected set; }
-        public Buffer<Vector2> TexCoordBuffer { get; protected set; }
+        public Vector2[] TexCoords { get; set; }
+        public Buffer<Vector2> TexCoordBuffer { get; set; }
 
         public override void UpdateBuffers()
         {

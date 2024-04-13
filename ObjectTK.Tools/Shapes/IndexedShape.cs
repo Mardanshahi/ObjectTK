@@ -12,11 +12,10 @@ using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
-    public abstract class IndexedShape
-        : Shape
+    public abstract class IndexedShape  : Shape , IIndexedShape
     {
-        public uint[] Indices { get; protected set; }
-        public Buffer<uint> IndexBuffer { get; protected set; }
+        public uint[] Indices { get; set; }
+        public Buffer<uint> IndexBuffer { get; set; }
 
         public override void UpdateBuffers()
         {

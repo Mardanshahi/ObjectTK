@@ -18,8 +18,7 @@ namespace MINNOVAA.ObjectTK
     /// Must be disposed explicitly, otherwise a warning will be logged indicating a memory leak.<br/>
     /// Can be derived to inherit the dispose pattern.
     /// </summary>
-    public abstract class GLResource
-        : IDisposable
+    public abstract class GLResource : IGLResource
     {
         private static readonly Logging.IObjectTKLogger Logger = Logging.LogFactory.GetLogger(typeof(GLResource));
 
@@ -27,6 +26,7 @@ namespace MINNOVAA.ObjectTK
         /// Gets a values specifying if this resource has already been disposed.
         /// </summary>
         public bool IsDisposed { get; private set; }
+        bool IGLResource.IsDisposed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <summary>
         /// Initializes a new instance of the GLObject class.

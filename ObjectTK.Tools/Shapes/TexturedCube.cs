@@ -7,18 +7,22 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using MINNOVAA.ObjectTK.Buffers;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Linq;
 
 namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
-    public class TexturedCube
-        : TexturedShape
+    public class TexturedCube  : Cube , ITexturedShape
     {
+        public Vector2[] TexCoords { get; set; }
+        public Buffer<Vector2> TexCoordBuffer { get; set; }
+
         public TexturedCube()
         {
             DefaultMode = PrimitiveType.Triangles;
+
 
             var quad_uv_map = new[]
             {
@@ -30,16 +34,28 @@ namespace MINNOVAA.ObjectTK.Tools.Shapes
                 new Vector2(0, 0),
             };
 
-            // use default cube
-            using (var cube = new Cube())
-            {
-                // Cube uses indexed vertices, TexturedShape assumes a flat vertices array
-                // So we need to assemble the missing vertices ourself
-                Vertices = cube.Indices.Select(idx => cube.Vertices[idx]).ToArray();
+         
+            // Cube uses indexed vertices, TexturedShape assumes a flat vertices array
+            // So we need to assemble the missing vertices ourself
+            Vertices = Indices.Select(idx => Vertices[idx]).ToArray();
 
-                // Use predefined uv texture mapping for vertices
-                TexCoords = Enumerable.Range(0, Vertices.Length).Select(i => quad_uv_map[i % quad_uv_map.Length]).ToArray();
-            }
+            // Use predefined uv texture mapping for vertices
+            TexCoords = Enumerable.Range(0, Vertices.Length).Select(i => quad_uv_map[i % quad_uv_map.Length]).ToArray();
+            
+        }
+        public override void UpdateBuffers()
+        {
+            base.UpdateBuffers();
+            TexCoordBuffer = new Buffer<Vector2>();
+            TexCoordBuffer.Init(BufferTarget.ArrayBuffer, TexCoords);
+        }
+
+        protected override void Dispose(bool manual)
+        {
+            base.Dispose(manual);
+            if (!manual) return;
+            if (TexCoordBuffer != null) TexCoordBuffer.Dispose();
         }
     }
+
 }

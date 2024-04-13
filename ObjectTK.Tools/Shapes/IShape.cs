@@ -22,22 +22,15 @@ namespace MINNOVAA.ObjectTK.Tools.Shapes
     /// there may be a colored, indexed shape with vertices, indices and colors
     /// there may be a colored shape with vertices and colors but no indices...
     /// </summary>
-    public abstract class Shape  : GLResource, IShape
+    public interface IShape  : IGLResource
     {
-        public PrimitiveType DefaultMode { get; set; }
-        public Vector3[] Vertices { get; set; }
-        public Buffer<Vector3> VertexBuffer { get; set; }
+        PrimitiveType DefaultMode { get; set; }
+        Vector3[] Vertices { get; set; }
+        Buffer<Vector3> VertexBuffer { get; set; }
 
-        public virtual void UpdateBuffers()
-        {
-            VertexBuffer = new Buffer<Vector3>();
-            VertexBuffer.Init(BufferTarget.ArrayBuffer, Vertices);
-        }
+        void UpdateBuffers();
 
-        protected override void Dispose(bool manual)
-        {
-            if (!manual) return;
-            if (VertexBuffer != null) VertexBuffer.Dispose();
-        }
+      
+   
     }
 }
