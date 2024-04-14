@@ -36,12 +36,17 @@ namespace MinimalExampleProject
 
         public Game()
         {
+            Resize += OnResize;
             Load += OnLoad;
             Unload += OnUnload;
             RenderFrame += OnRenderFrame;
         }
 
+        private void OnResize(object sender, EventArgs e)
+        {
+            
 
+        }
 
         private void OnLoad(object sender, EventArgs e)
         {
