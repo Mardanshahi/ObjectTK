@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using MINNOVAA.ObjectTK.Exceptions;
 using MINNOVAA.ObjectTK.Shaders.Sources;
+using OpenTK.Graphics.OpenGL;
 
 namespace MINNOVAA.ObjectTK.Shaders
 {
@@ -40,6 +41,49 @@ namespace MINNOVAA.ObjectTK.Shaders
         {
             BasePath = Path.Combine("Data", "Shaders");
             Extension = "glsl";
+        }
+        /// <summary>
+        /// Initializes a program object using the shader sources tagged to the type with <see cref="ShaderSourceAttribute"/>.
+        /// </summary>
+        /// <typeparam name="T">Specifies the program type to create.</typeparam>
+        /// <returns>A compiled and linked program.</returns>
+        public static T Create<T>(string vertexshader, string fragmentshader)
+            where T : Program
+        {
+            // retrieve shader types and filenames from attributes
+            var shaders = ShaderSourceAttribute.GetShaderSources(typeof(T));
+            if (shaders.Count == 0) throw new ObjectTKException("ShaderSourceAttribute(s) missing!");
+            // create program instance
+            var program = (T)Activator.CreateInstance(typeof(T));
+            try
+            {
+                // compile and attach all shaders
+                foreach (var attribute in shaders)
+                {
+                    // create a new shader of the appropriate type
+                    using (var shader = new Shader(attribute.Type))
+                    {
+                        Logger?.DebugFormat("Compiling {0}: {1}", attribute.Type, attribute.EffectKey);
+                        // load the source from effect(s)
+                        var included = new List<Effect.Section>();
+                        var source = attribute.Type == ShaderType.VertexShader ? vertexshader : fragmentshader;
+                        // assign source filenames for proper information log output
+                        shader.SourceFiles = included.Select(_ => _.Effect.Path).ToList();
+                        // compile shader source
+                        shader.CompileSource(source);
+                        // attach shader to the program
+                        program.Attach(shader);
+                    }
+                }
+                // link and return the program
+                program.Link();
+            }
+            catch
+            {
+                program.Dispose();
+                throw;
+            }
+            return program;
         }
 
         /// <summary>
