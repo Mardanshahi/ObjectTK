@@ -43,9 +43,9 @@ namespace Qvrc2VistaOO
         Matrix4 rotModel;
 
         /// ////////////////////
-        Texture1D TfTexture;
-        Texture3D VolTexture;
-        Texture2D TargetTexture ;
+        private Texture1D TfTexture;
+        private Texture3D VolTexture;
+        private Texture2D TargetTexture ;
         private VertexArray VolumeVAO;
         private VolumeCube _cube;
         private Renderbuffer DBuffer;
@@ -221,6 +221,11 @@ namespace Qvrc2VistaOO
         protected override void OnLoad(EventArgs e)
         {
             #region Volume Image Init
+
+            DBuffer = new Renderbuffer();
+            FrameBufferObject = new Framebuffer();
+
+
             Nsamples = NsamplesHigh;
             CompositingMode = 0;
             ShadingMode = 1;
@@ -459,8 +464,7 @@ namespace Qvrc2VistaOO
             TargetTexture.SetWrapMode(TextureWrapMode.ClampToEdge);
             TargetTexture.SetFilter(TextureMinFilter.Linear, TextureMagFilter.Linear);
             /* framebuffer object for two pass rendering */
-            DBuffer = new Renderbuffer();
-            FrameBufferObject = new Framebuffer();
+          
             DBuffer.Init(RenderbufferStorage.DepthComponent, Width, Height);            /* render buffer for face culling */
             FrameBufferObject.Bind(FramebufferTarget.Framebuffer);            /* frame buffer for rendering */
             FrameBufferObject.Attach(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TargetTexture);
@@ -474,7 +478,13 @@ namespace Qvrc2VistaOO
 
         protected override void OnUnload(EventArgs e)
         {
-            
+            TfTexture.Dispose(); 
+            VolTexture.Dispose();
+            _cube.Dispose();
+            VolumeVAO.Dispose();
+            TargetTexture.Dispose();
+            DBuffer.Dispose();
+            FrameBufferObject.Dispose();
             DistanceShader.Dispose();
             RaycastShader.Dispose();
 
