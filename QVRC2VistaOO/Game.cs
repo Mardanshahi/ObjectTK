@@ -44,7 +44,7 @@ namespace Qvrc2VistaOO
 
         /// ////////////////////
         TextureWrapperImpl TfTexture;
-        TextureWrapperImpl VolTexture;
+        Texture3D VolTexture;
         Texture2D TargetTexture ;
         private VertexArray VolumeVAO;
         private VolumeCube _cube;
@@ -138,29 +138,11 @@ namespace Qvrc2VistaOO
   
         int LoadVolumeUShort(string path, int w, int h, int d)
         {
-            var byteArray = File.ReadAllBytes(path);
-            GCHandle pinnedArray = GCHandle.Alloc(byteArray, GCHandleType.Pinned);
-            IntPtr pData = pinnedArray.AddrOfPinnedObject();
-
-
-            //generate OpenGL texture
-            VolTexture = new TextureWrapperImpl();
-            GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture3D, VolTexture.TextureID);
-            // set the texture parameters
-            GL.TexParameter(TextureTarget.Texture3D, TextureParameterName.TextureWrapS,(int)TextureWrapMode.ClampToEdge );
-            GL.TexParameter(TextureTarget.Texture3D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge );
-            GL.TexParameter(TextureTarget.Texture3D, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge );
-            GL.TexParameter(TextureTarget.Texture3D, TextureParameterName.TextureMagFilter,(int)TextureMagFilter.Linear );
-            GL.TexParameter(TextureTarget.Texture3D, TextureParameterName.TextureMinFilter,  (int)TextureMinFilter.Linear);
-            //allocate data with internal format and foramt as (GL_RED)		
-            GL.TexImage3D(TextureTarget.Texture3D, 0, PixelInternalFormat.R16, w, h, d, 0, PixelFormat.Red, PixelType.UnsignedShort, pData);   //??!! REd or CompressedRed
-
-            //generate mipmaps
-
-            //delete the volume data allocated on heap
-            pinnedArray.Free(); //when to delete !!??
-            return VolTexture.TextureID;
+            VolumeTexture.CreateCompatible( out VolTexture, w, h, d);
+            VolTexture.LoadData(path);           
+            VolTexture.SetWrapMode(TextureWrapMode.ClampToEdge);
+            VolTexture.SetFilter(TextureMinFilter.Linear, TextureMagFilter.Linear);          
+            return VolTexture.Handle;
         }
 
         int LoadTransferFunction(float[] data, int sz)
@@ -478,7 +460,7 @@ namespace Qvrc2VistaOO
                 /* volume data */
                 tex_loc = RaycastShader.getUniformOperator("voltex");
                 GL.ActiveTexture(TextureUnit.Texture1);
-                GL.BindTexture(TextureTarget.Texture3D, VolTexture.TextureID);
+                GL.BindTexture(TextureTarget.Texture3D, VolTexture.Handle);
                 GL.Uniform1(tex_loc, 1);
 
                 /* transfer function */
