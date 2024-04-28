@@ -26,6 +26,16 @@ namespace MINNOVAA.ObjectTK.Textures
             texture = new Texture1D(SizedInternalFormat.Rgba16f, width, levels);
         }
 
+        public static void LoadData(this Texture3D texture, Array volumeReferenceArray, int xDim, int yDim, int zDim, int level = 0)
+        {
+            texture.Bind();
+            var volumeData = volumeReferenceArray as ushort[];
+            GL.TexSubImage3D(texture.TextureTarget, level, 0, 0, 0, texture.Width, texture.Height, texture.Depth,
+                    PixelFormat.Red, PixelType.UnsignedShort, volumeData);
+            if (volumeData == null || volumeData.Length != xDim * yDim * zDim)
+                throw new ArgumentException("Invalid input array or array size mismatch.");
+            CheckError();
+        }
         /// <summary>
         /// Uploads the contents of a bitmap to the given texture level.<br/>
         /// Will result in an OpenGL error if the given bitmap is incompatible with the textures storage.
