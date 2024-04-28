@@ -4,7 +4,7 @@ using MINNOVAA.ObjectTK.Shaders.Variables;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace MinimalExampleProject
+namespace MinimalExampleProject.Shaders
 {
     [VertexShaderSource("ExampleShader.Vertex")]
     [FragmentShaderSource("ExampleShader.Fragment")]

@@ -83,32 +83,6 @@ namespace Qvrc2VistaOO
             }
         }
 
-        /* target texture for the first rendering pass */
-        void InitTargetTexture(int w, int h)
-        {
-            if (TargetTexture != null)
-                TargetTexture.Dispose();
-            TargetTexture = new Texture2D(SizedInternalFormat.Rgba16f, w, h);
-            TargetTexture.SetWrapMode(TextureWrapMode.ClampToEdge);
-            TargetTexture.SetFilter(TextureMinFilter.Linear, TextureMagFilter.Linear);
-        }
-
-        /* framebuffer object for two pass rendering */
-        void InitFbo(int w, int h)
-        {
-            if (DBuffer != null)
-                DBuffer.Dispose();
-            if (FrameBufferObject != null)
-                FrameBufferObject.Dispose();
-            DBuffer = new Renderbuffer();
-            FrameBufferObject = new Framebuffer();
-            DBuffer.Init(RenderbufferStorage.DepthComponent, w, h);       /* render buffer for face culling */
-            FrameBufferObject.Bind(FramebufferTarget.Framebuffer);        /* frame buffer for rendering */
-            FrameBufferObject.Attach(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TargetTexture);
-            FrameBufferObject.Attach(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, DBuffer);
-            Framebuffer.Unbind(FramebufferTarget.Framebuffer);
-        }
-  
         int LoadVolumeUShort(string path, int w, int h, int d)
         {
             VolumeTexture.CreateCompatible( out VolTexture, w, h, d);
@@ -410,62 +384,39 @@ namespace Qvrc2VistaOO
 
                 /* restore previous framebuffer, we'll render to screen now */
                 //Console.WriteLine("fbo: " + FrameBufferObject.FrameBufferID);
-                GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);// FrameBufferObject.FrameBufferID);// > 0 ? FrameBufferObject.FrameBufferID : 0);
+                GL.BindFramebuffer(FramebufferTarget.Framebuffer, savedfbo);// FrameBufferObject.FrameBufferID);// > 0 ? FrameBufferObject.FrameBufferID : 0);
                 RaycastShader.Use();
 
                 GL.Enable(EnableCap.DepthTest);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-                int tex_loc = RaycastShader.getUniformOperator("backtex");
-                GL.ActiveTexture(TextureUnit.Texture0);
-                TargetTexture.Bind();
-                GL.Uniform1(tex_loc, 0);
-
+                TargetTexture.Bind(TextureUnit.Texture0);
+                GL.Uniform1(RaycastShader.getUniformOperator("backtex"), 0);
                 /* volume data */
-                tex_loc = RaycastShader.getUniformOperator("voltex");
-                GL.ActiveTexture(TextureUnit.Texture1);
-                GL.BindTexture(TextureTarget.Texture3D, VolTexture.Handle);
-                GL.Uniform1(tex_loc, 1);
-
+                VolTexture.Bind(TextureUnit.Texture1);
+                GL.Uniform1(RaycastShader.getUniformOperator("voltex"), 1);
                 /* transfer function */
-                tex_loc = RaycastShader.getUniformOperator("tftex");
-                GL.ActiveTexture(TextureUnit.Texture2);
-                GL.BindTexture(TextureTarget.Texture1D, TfTexture.Handle);
-                GL.Uniform1(tex_loc, 2);
+                TfTexture.Bind(TextureUnit.Texture2);
+                GL.Uniform1(RaycastShader.getUniformOperator("tftex"), 2);
 
                 /* viewport size, needed to get normalized texture coordinates */
-                int screen_width_loc = RaycastShader.getUniformOperator("screen_width");
-                int screen_height_loc = RaycastShader.getUniformOperator("screen_height");
-                GL.Uniform1(screen_width_loc, (float)Width);
-                GL.Uniform1(screen_height_loc, (float)Height);
-
+                GL.Uniform1(RaycastShader.getUniformOperator("screen_width"), (float)Width);
+                GL.Uniform1(RaycastShader.getUniformOperator("screen_height"), (float)Height);
                 /* viewport size, needed to get normalized texture coordinates */
-                int scale_loc = RaycastShader.getUniformOperator("scale");
-
                 float[] scale = { XScale, YScale, ZScale };
-                GL.Uniform3(scale_loc, 1, scale);
-
+                GL.Uniform3(RaycastShader.getUniformOperator("scale"), 1, scale);
                 /* how many samples we want in our ray integral */
-                int nsamples_loc = RaycastShader.getUniformOperator("nsamples");
-                GL.Uniform1(nsamples_loc, (float)Nsamples);
-
+                GL.Uniform1(RaycastShader.getUniformOperator("nsamples"), (float)Nsamples);
                 /* compositing mode (front to back, mip, mida), mida doesn't really work */
-                int compositing_mode_loc = RaycastShader.getUniformOperator("compositing_mode");
-                GL.Uniform1(compositing_mode_loc, (int)CompositingMode);
-
+                GL.Uniform1(RaycastShader.getUniformOperator("compositing_mode"), (int)CompositingMode);
                 /* shading mode (blinn phong, toon, none) */
-                int shading_mode_loc = RaycastShader.getUniformOperator("shading_mode");
-                GL.Uniform1(shading_mode_loc, (int)ShadingMode);
-
+                GL.Uniform1(RaycastShader.getUniformOperator("shading_mode"), (int)ShadingMode);
                 /* shading parameters */
-                int light_color_loc = RaycastShader.getUniformOperator("light_color");
-                GL.Uniform3(light_color_loc, 1, LightColor);
-                int ka_loc = RaycastShader.getUniformOperator("ka");
-                GL.Uniform1(ka_loc, AmbientReflectance);
-                int kd_loc = RaycastShader.getUniformOperator("kd");
-                GL.Uniform1(kd_loc, DiffuseReflectance);
-                int ks_loc = RaycastShader.getUniformOperator("ks");
-                GL.Uniform1(ks_loc, SpecularReflectance);
+                GL.Uniform3(RaycastShader.getUniformOperator("light_color"), 1, LightColor);
+                GL.Uniform1(RaycastShader.getUniformOperator("ka"), AmbientReflectance);
+                GL.Uniform1(RaycastShader.getUniformOperator("kd"), DiffuseReflectance);
+                GL.Uniform1(RaycastShader.getUniformOperator("ks"), SpecularReflectance);
+
 
 
                 /* second pass: render the cube again with backface culling, now
@@ -503,8 +454,18 @@ namespace Qvrc2VistaOO
         protected override void OnResize(EventArgs e)
         {
             camera.AspectRatio = Width / (float)Height;
-            InitTargetTexture(Width, Height);
-            InitFbo(Width, Height);
+            /* target texture for the first rendering pass */
+            TargetTexture = new Texture2D(SizedInternalFormat.Rgba16f, Width, Height);
+            TargetTexture.SetWrapMode(TextureWrapMode.ClampToEdge);
+            TargetTexture.SetFilter(TextureMinFilter.Linear, TextureMagFilter.Linear);
+            /* framebuffer object for two pass rendering */
+            DBuffer = new Renderbuffer();
+            FrameBufferObject = new Framebuffer();
+            DBuffer.Init(RenderbufferStorage.DepthComponent, Width, Height);            /* render buffer for face culling */
+            FrameBufferObject.Bind(FramebufferTarget.Framebuffer);            /* frame buffer for rendering */
+            FrameBufferObject.Attach(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TargetTexture);
+            FrameBufferObject.Attach(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, DBuffer);
+            Framebuffer.Unbind(FramebufferTarget.Framebuffer);
             GL.Viewport(0, 0, Width, Height);
             isViewRotated = true;
 
