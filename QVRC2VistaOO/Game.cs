@@ -43,7 +43,7 @@ namespace Qvrc2VistaOO
         Matrix4 rotModel;
 
         /// ////////////////////
-        TextureWrapperImpl TfTexture;
+        Texture1D TfTexture;
         Texture3D VolTexture;
         Texture2D TargetTexture ;
         private VertexArray VolumeVAO;
@@ -86,54 +86,27 @@ namespace Qvrc2VistaOO
         /* target texture for the first rendering pass */
         void InitTargetTexture(int w, int h)
         {
-            //var err0 = GL.GetError();
-
-            /* check this shit */
             if (TargetTexture != null)
                 TargetTexture.Dispose();
             TargetTexture = new Texture2D(SizedInternalFormat.Rgba16f, w, h);
-            //GL.BindTexture(TextureTarget.Texture2D, TargetTexture.Handle);
-            //var err1 = GL.GetError();
-
             TargetTexture.SetWrapMode(TextureWrapMode.ClampToEdge);
             TargetTexture.SetFilter(TextureMinFilter.Linear, TextureMagFilter.Linear);
-            //var err2 = GL.GetError();
-
-            /* try to keep a good precision in the intermediate rendering steps */
-            //GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba16f, w, h, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
-            //var err3 = GL.GetError();
-
         }
 
         /* framebuffer object for two pass rendering */
         void InitFbo(int w, int h)
         {
-            //var err00 = GL.GetError();
-
             if (DBuffer != null)
                 DBuffer.Dispose();
             if (FrameBufferObject != null)
                 FrameBufferObject.Dispose();
-
             DBuffer = new Renderbuffer();
             FrameBufferObject = new Framebuffer();
-            //var err0 = GL.GetError();
-
-            /* render buffer for face culling */
-            DBuffer.Init(RenderbufferStorage.DepthComponent, w, h);
-            //var err1 = GL.GetError();
-
-            /* frame buffer for rendering */
-            FrameBufferObject.Bind(FramebufferTarget.Framebuffer);
-            //var err2 = GL.GetError();
-
+            DBuffer.Init(RenderbufferStorage.DepthComponent, w, h);       /* render buffer for face culling */
+            FrameBufferObject.Bind(FramebufferTarget.Framebuffer);        /* frame buffer for rendering */
             FrameBufferObject.Attach(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TargetTexture);
-            //var err3 = GL.GetError();
-
             FrameBufferObject.Attach(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, DBuffer);
-
             Framebuffer.Unbind(FramebufferTarget.Framebuffer);
-      
         }
   
         int LoadVolumeUShort(string path, int w, int h, int d)
@@ -191,21 +164,12 @@ namespace Qvrc2VistaOO
                 }
             }
 
-            TfTexture = new TextureWrapperImpl();
-            GL.BindTexture(TextureTarget.Texture1D, TfTexture.TextureID);
-            GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-            GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
-            GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMinFilter, (int)TextureMagFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
-            /* TODO: explore different transfer function precisions */
-            var pdataLength = pData.GetLength(0);
-            GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgba16f, pdataLength, 0, PixelFormat.Rgba, PixelType.Float, pData);
+            VolumeTexture.CreateCompatible(out TfTexture, pData.GetLength(0));
+            TfTexture.LoadData(pData);
+            TfTexture.SetWrapMode(TextureWrapMode.ClampToEdge);
+            TfTexture.SetFilter(TextureMinFilter.Linear, TextureMagFilter.Linear);
 
-            //if (default_tf != NULL)
-            //    free(default_tf);
-
-            return TfTexture.TextureID;
+            return TfTexture.Handle;
         }
 
 
@@ -466,7 +430,7 @@ namespace Qvrc2VistaOO
                 /* transfer function */
                 tex_loc = RaycastShader.getUniformOperator("tftex");
                 GL.ActiveTexture(TextureUnit.Texture2);
-                GL.BindTexture(TextureTarget.Texture1D, TfTexture.TextureID);
+                GL.BindTexture(TextureTarget.Texture1D, TfTexture.Handle);
                 GL.Uniform1(tex_loc, 2);
 
                 /* viewport size, needed to get normalized texture coordinates */
@@ -610,19 +574,6 @@ namespace Qvrc2VistaOO
             base.OnMouseDown(e);
         }
 
-        public class TextureWrapperImpl : IDisposable
-        {
-            public int TextureID { get; }
-            public TextureWrapperImpl()
-            {
-                GL.GenTextures(1, out int textureId);
-                TextureID = textureId;
-            }
-            public void Dispose()
-            {
-                GL.DeleteTexture(TextureID);
-            }
-        }
 
     }
 }
