@@ -46,8 +46,10 @@ namespace Qvrc2VistaOO
         private Texture1D TfTexture;
         private Texture3D VolTexture;
         private Texture2D TargetTexture ;
-        private VertexArray VolumeVAO;
-        private VolumeCube _cube;
+        private VertexArray VolumeVAO1;
+        private VertexArray VolumeVAO2;
+        private VolumeCube1 _cube1;
+        private VolumeCube2 _cube2;
         private Renderbuffer DBuffer;
         private Framebuffer FrameBufferObject;
 
@@ -238,16 +240,18 @@ namespace Qvrc2VistaOO
 
             /* I should probably get initial rotation from DICOM orientation data */
             RotationMadeByUser = Quaternion.FromEulerAngles(0, 0, 0);
-            rotModel = Matrix4.CreateFromQuaternion(RotationMadeByUser);
+            //rotModel = Matrix4.CreateFromQuaternion(RotationMadeByUser);
             /* draw in [0,1] because we want local coordinates easily mapped
              * to colors, translate in [-0.5,0.5] to make camera transforms
              * easier */
-            rotModel = rotModel * Matrix4.CreateTranslation(-0.5f, -0.5f, -0.5f);
+            //rotModel = rotModel * Matrix4.CreateTranslation(-0.5f, -0.5f, -0.5f);
 
             // initialize demonstration geometry
-            _cube = new VolumeCube();
-            _cube.UpdateBuffers();
+            _cube1 = new VolumeCube1();
+            _cube1.UpdateBuffers();
 
+            _cube2 = new VolumeCube2();
+            _cube2.UpdateBuffers();
 
             /* enable alpha blending */
             GL.Enable(EnableCap.Blend);
@@ -306,11 +310,18 @@ namespace Qvrc2VistaOO
 
             DistanceShader.AddAttribute("aPosition1");
             var vertexLocation1 = DistanceShader.getAttributeOperator("aPosition1");
-            VolumeVAO = new VertexArray();
-            VolumeVAO.Bind();
-            VolumeVAO.BindAttribute(vertexLocation1, _cube.VertexBuffer, 3, VertexAttribPointerType.Float, 3 * sizeof(float), 0, false);       // (_textureProgram.InPosition, _cube.VertexBuffer);
-            VolumeVAO.BindElementBuffer(_cube.IndexBuffer);
+            VolumeVAO1 = new VertexArray();
+            VolumeVAO1.Bind();
+            VolumeVAO1.BindAttribute(vertexLocation1, _cube1.VertexBuffer, 3, VertexAttribPointerType.Float, 3 * sizeof(float), 0, false);       // (_textureProgram.InPosition, _cube.VertexBuffer);
+            VolumeVAO1.BindElementBuffer(_cube1.IndexBuffer);
             //var err0 = GL.GetError();
+            VolumeVAO2 = new VertexArray();
+            VolumeVAO2.Bind();
+            VolumeVAO2.BindAttribute(vertexLocation1, _cube2.VertexBuffer, 3, VertexAttribPointerType.Float, 3 * sizeof(float), 0, false);       // (_textureProgram.InPosition, _cube.VertexBuffer);
+            VolumeVAO2.BindElementBuffer(_cube2.IndexBuffer);
+            
+            
+            //VolumeVAO1.Bind();
 
             DistanceShader.UnUse();
 
@@ -347,8 +358,8 @@ namespace Qvrc2VistaOO
 
 
                 /* backup current fbo as Qt might be doing something there */
-                int savedfbo;
-                GL.GetInteger(GetPName.FramebufferBinding, out savedfbo);
+                //int savedfbo;
+                //GL.GetInteger(GetPName.FramebufferBinding, out savedfbo);
                 //Console.WriteLine("saved: "+savedfbo);
                 GL.Viewport(0, 0, Width, Height);
 
@@ -372,7 +383,7 @@ namespace Qvrc2VistaOO
 
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                //GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                 /* scene transform happens in the shaders with modern GL */
                 GL.UniformMatrix4(DistanceShader.getUniformOperator("projection"), false, ref camProjMat);
@@ -381,19 +392,22 @@ namespace Qvrc2VistaOO
 
                 GL.CullFace(CullFaceMode.Front);
 
-                VolumeVAO.Bind();
-                VolumeVAO.DrawElements(PrimitiveType.Triangles, 36);
+                VolumeVAO2.Bind();
+                VolumeVAO2.DrawElements(PrimitiveType.Triangles, 36);
+
+                VolumeVAO1.Bind();
+                VolumeVAO1.DrawElements(PrimitiveType.Triangles, 36);
                 /////////////////////////////////////////////////////////////
 
                 DistanceShader.UnUse();
 
                 /* restore previous framebuffer, we'll render to screen now */
                 //Console.WriteLine("fbo: " + FrameBufferObject.FrameBufferID);
-                GL.BindFramebuffer(FramebufferTarget.Framebuffer, savedfbo);// FrameBufferObject.FrameBufferID);// > 0 ? FrameBufferObject.FrameBufferID : 0);
+                GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);// FrameBufferObject.FrameBufferID);// > 0 ? FrameBufferObject.FrameBufferID : 0);
                 RaycastShader.Use();
 
-                GL.Enable(EnableCap.DepthTest);
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                //GL.Enable(EnableCap.DepthTest);
+                //GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                 TargetTexture.Bind(TextureUnit.Texture0);
                 GL.Uniform1(RaycastShader.getUniformOperator("backtex"), 0);
@@ -442,8 +456,11 @@ namespace Qvrc2VistaOO
 
                 GL.CullFace(CullFaceMode.Back);
  
-                VolumeVAO.Bind();
-                VolumeVAO.DrawElements(PrimitiveType.Triangles, 36);
+                VolumeVAO2.Bind();
+                VolumeVAO2.DrawElements(PrimitiveType.Triangles, 36);
+
+                VolumeVAO1.Bind();
+                VolumeVAO1.DrawElements(PrimitiveType.Triangles, 36);
                 ///////////////////////////////
                 RaycastShader.UnUse();
                 #endregion
@@ -480,8 +497,10 @@ namespace Qvrc2VistaOO
         {
             TfTexture.Dispose(); 
             VolTexture.Dispose();
-            _cube.Dispose();
-            VolumeVAO.Dispose();
+            _cube1.Dispose();
+            VolumeVAO1.Dispose();
+            _cube2.Dispose();
+            VolumeVAO2.Dispose();
             TargetTexture.Dispose();
             DBuffer.Dispose();
             FrameBufferObject.Dispose();

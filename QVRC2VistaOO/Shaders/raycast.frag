@@ -250,7 +250,7 @@ void main()
          */
         if ((color.a > SHADING_THRES) &&
             (shading_mode != 3) &&
-            (nsamples > 500)) {
+            (nsamples > 50)) {
             /* everything in world space */
             vec3 N = gradient_central_diff(voltex, pos, DELTA);
 

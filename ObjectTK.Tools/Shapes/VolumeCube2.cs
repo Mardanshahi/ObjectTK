@@ -6,25 +6,26 @@ using System.Linq;
 
 namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
-    public class VolumeCube : IndexedShape
+    public class VolumeCube2 : IndexedShape
     {
 
-        public VolumeCube()
+        public VolumeCube2()
         {
             DefaultMode = PrimitiveType.TriangleStrip;
 
             // For cube we would need only 8 vertices but we have to
             // duplicate vertex for each face because texture coordinate
             // is different.
-            Vertices = new []{
-                new Vector3(0.0f, 0.0f, 0.0f),
-                new Vector3(0.0f, 0.0f, 1.0f),
-                new Vector3(0.0f, 1.0f, 0.0f),
-                new Vector3(0.0f, 1.0f, 1.0f),
-                new Vector3(1.0f, 0.0f, 0.0f),
-                new Vector3(1.0f, 0.0f, 1.0f),
-                new Vector3(1.0f, 1.0f, 0.0f),
+            Vertices = new[]{
+                new Vector3(0.5f, 0.5f, 0.5f),
+                new Vector3(0.5f, 0.5f, 1.0f),
+                new Vector3(0.5f, 1.0f, 0.5f),
+                new Vector3(0.5f, 1.0f, 1.0f),
+                new Vector3(1.0f, 0.5f, 0.5f),
+                new Vector3(1.0f, 0.5f, 1.0f),
+                new Vector3(1.0f, 1.0f, 0.5f),
                 new Vector3(1.0f, 1.0f, 1.0f)
+                
             };
 
             Indices = new uint[] {

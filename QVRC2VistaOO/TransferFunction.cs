@@ -26,8 +26,8 @@ namespace Qvrc2VistaOO
             Points = new ObservableCollection<TfPoint>(new[]
                 {
                     new TfPoint() { Intensity = 300 , Opacity = 0.0f, JetValue = new Vector3(0.0f, 0.0f, 0.0f) },
-                    new TfPoint() { Intensity = 350 , Opacity = 0.75f, JetValue = new Vector3(0.9f, 0.9f, 0.8f) },
-                    new TfPoint() { Intensity = 444, Opacity = 0.8f, JetValue = new Vector3(1f, 0.9f, 0.9f) },
+                    new TfPoint() { Intensity = 350 , Opacity = 0.5f, JetValue = new Vector3(0.9f, 0.9f, 0.8f) },
+                    new TfPoint() { Intensity = 444, Opacity = 0.6f, JetValue = new Vector3(1f, 0.9f, 0.9f) },
                 })
         };
 
@@ -36,9 +36,9 @@ namespace Qvrc2VistaOO
             Name = "CT Bones",
             Points = new ObservableCollection<TfPoint>(new[]
                 {
-                    new TfPoint() { Intensity = 1500, Opacity = 0.0f, JetValue = new Vector3(0.25f, 0.0f, 0.0f) },
-                    new TfPoint() { Intensity = 1540, Opacity = 0.7f, JetValue = new Vector3(0.5f, 0.25f, 0.0f) },
-                    new TfPoint() { Intensity = 1600, Opacity = 1f, JetValue = new Vector3(1f, 1f, 0.9f) },
+                    new TfPoint() { Intensity = 4700, Opacity = 0.0f, JetValue = new Vector3(0.25f, 0.0f, 0.0f) },
+                    new TfPoint() { Intensity = 4840, Opacity = 0.05f, JetValue = new Vector3(0.5f, 0.25f, 0.0f) },
+                    new TfPoint() { Intensity = 4900, Opacity = 0.1f, JetValue = new Vector3(1f, 1f, 0.9f) },
                 })
         };
 
