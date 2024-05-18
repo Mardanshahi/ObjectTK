@@ -36,9 +36,9 @@ namespace Qvrc2VistaOO
             Name = "CT Bones",
             Points = new ObservableCollection<TfPoint>(new[]
                 {
-                    new TfPoint() { Intensity = 4700, Opacity = 0.0f, JetValue = new Vector3(0.25f, 0.0f, 0.0f) },
-                    new TfPoint() { Intensity = 4840, Opacity = 0.05f, JetValue = new Vector3(0.5f, 0.25f, 0.0f) },
-                    new TfPoint() { Intensity = 4900, Opacity = 0.1f, JetValue = new Vector3(1f, 1f, 0.9f) },
+                    new TfPoint() { Intensity = 5700, Opacity = 0.0f, JetValue = new Vector3(0.25f, 0.0f, 0.0f) },
+                    new TfPoint() { Intensity = 5840, Opacity = 0.4f, JetValue = new Vector3(0.5f, 0.25f, 0.0f) },
+                    new TfPoint() { Intensity = 5900, Opacity = 0.5f, JetValue = new Vector3(1f, 1f, 0.9f) },
                 })
         };
 

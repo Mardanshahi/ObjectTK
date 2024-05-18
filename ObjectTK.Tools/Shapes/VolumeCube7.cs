@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
-    public class VolumeCube22 : IndexedShape
+    public class VolumeCube7 : IndexedShape
     {
 
-        public VolumeCube22()
+        public VolumeCube7()
         {
             DefaultMode = PrimitiveType.TriangleStrip;
 
@@ -25,7 +25,6 @@ namespace MINNOVAA.ObjectTK.Tools.Shapes
                 new Vector3(1.0f, 0.5f, 1.0f),
                 new Vector3(1.0f, 1.0f, 0.5f),
                 new Vector3(1.0f, 1.0f, 1.0f)
-                
             };
 
             Indices = new uint[] {

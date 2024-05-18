@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace MINNOVAA.ObjectTK.Tools.Shapes
 {
-    public class VolumeCube12 : IndexedShape
+    public class VolumeCube3 : IndexedShape
     {
 
-        public VolumeCube12()
+        public VolumeCube3()
         {
             DefaultMode = PrimitiveType.TriangleStrip;
 
@@ -17,14 +17,14 @@ namespace MINNOVAA.ObjectTK.Tools.Shapes
             // duplicate vertex for each face because texture coordinate
             // is different.
             Vertices = new []{
-                new Vector3(0.0f, 0.0f, 0.0f),
-                new Vector3(0.0f, 0.0f, 0.5f),
-                new Vector3(0.0f, 0.5f, 0.0f),
-                new Vector3(0.0f, 0.5f, 0.5f),
-                new Vector3(0.5f, 0.0f, 0.0f),
-                new Vector3(0.5f, 0.0f, 0.5f),
-                new Vector3(0.5f, 0.5f, 0.0f),
-                new Vector3(0.5f, 0.5f, 0.5f)
+                new Vector3( 0.0f, 0.5f, 0.5f),
+                new Vector3( 0.0f, 0.5f, 1.0f),
+                new Vector3( 0.0f, 1.0f, 0.5f),
+                new Vector3( 0.0f, 1.0f, 1.0f),
+                new Vector3( 0.5f, 0.5f, 0.5f),
+                new Vector3( 0.5f, 0.5f, 1.0f),
+                new Vector3( 0.5f, 1.0f, 0.5f),
+                new Vector3( 0.5f, 1.0f, 1.0f)
             };
 
             Indices = new uint[] {
