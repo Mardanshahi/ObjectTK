@@ -50,6 +50,10 @@ namespace Qvrc2VistaOO
         private VertexArray VolumeVAO2;
         private VolumeCube1 _cube1;
         private VolumeCube2 _cube2;
+        private VertexArray VolumeVAO12;
+        private VertexArray VolumeVAO22;
+        private VolumeCube12 _cube12;
+        private VolumeCube22 _cube22;
         private Renderbuffer DBuffer;
         private Framebuffer FrameBufferObject;
 
@@ -253,6 +257,12 @@ namespace Qvrc2VistaOO
             _cube2 = new VolumeCube2();
             _cube2.UpdateBuffers();
 
+            _cube12 = new VolumeCube12();
+            _cube12.UpdateBuffers();
+
+            _cube22 = new VolumeCube22();
+            _cube22.UpdateBuffers();
+
             /* enable alpha blending */
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
@@ -319,9 +329,18 @@ namespace Qvrc2VistaOO
             VolumeVAO2.Bind();
             VolumeVAO2.BindAttribute(vertexLocation1, _cube2.VertexBuffer, 3, VertexAttribPointerType.Float, 3 * sizeof(float), 0, false);       // (_textureProgram.InPosition, _cube.VertexBuffer);
             VolumeVAO2.BindElementBuffer(_cube2.IndexBuffer);
-            
-            
-            //VolumeVAO1.Bind();
+
+
+            VolumeVAO12 = new VertexArray();
+            VolumeVAO12.Bind();
+            VolumeVAO12.BindAttribute(vertexLocation1, _cube12.VertexBuffer, 3, VertexAttribPointerType.Float, 3 * sizeof(float), 0, false);       // (_textureProgram.InPosition, _cube.VertexBuffer);
+            VolumeVAO12.BindElementBuffer(_cube12.IndexBuffer);
+            //var err0 = GL.GetError();
+            VolumeVAO22 = new VertexArray();
+            VolumeVAO22.Bind();
+            VolumeVAO22.BindAttribute(vertexLocation1, _cube22.VertexBuffer, 3, VertexAttribPointerType.Float, 3 * sizeof(float), 0, false);       // (_textureProgram.InPosition, _cube.VertexBuffer);
+            VolumeVAO22.BindElementBuffer(_cube22.IndexBuffer);
+
 
             DistanceShader.UnUse();
 
@@ -397,6 +416,12 @@ namespace Qvrc2VistaOO
 
                 VolumeVAO1.Bind();
                 VolumeVAO1.DrawElements(PrimitiveType.Triangles, 36);
+
+                VolumeVAO22.Bind();
+                VolumeVAO22.DrawElements(PrimitiveType.Triangles, 36);
+
+                VolumeVAO12.Bind();
+                VolumeVAO12.DrawElements(PrimitiveType.Triangles, 36);
                 /////////////////////////////////////////////////////////////
 
                 DistanceShader.UnUse();
@@ -461,6 +486,12 @@ namespace Qvrc2VistaOO
 
                 VolumeVAO1.Bind();
                 VolumeVAO1.DrawElements(PrimitiveType.Triangles, 36);
+
+                VolumeVAO22.Bind();
+                VolumeVAO22.DrawElements(PrimitiveType.Triangles, 36);
+
+                VolumeVAO12.Bind();
+                VolumeVAO12.DrawElements(PrimitiveType.Triangles, 36);
                 ///////////////////////////////
                 RaycastShader.UnUse();
                 #endregion
@@ -501,6 +532,11 @@ namespace Qvrc2VistaOO
             VolumeVAO1.Dispose();
             _cube2.Dispose();
             VolumeVAO2.Dispose();
+
+            _cube12.Dispose();
+            VolumeVAO12.Dispose();
+            _cube22.Dispose();
+            VolumeVAO22.Dispose();
             TargetTexture.Dispose();
             DBuffer.Dispose();
             FrameBufferObject.Dispose();
